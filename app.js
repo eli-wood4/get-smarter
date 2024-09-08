@@ -1,6 +1,6 @@
-const twitchClientId = 'YOUR_CLIENT_ID'; // Replace with your Twitch Client ID
-const twitchToken = 'YOUR_OAUTH_TOKEN';  // Replace with your OAuth token
-const twitchUsername = 'YOUR_TWITCH_USERNAME'; // Replace with your Twitch username
+const twitchClientId = 'gp762nuuoqcoxypju8c569th9wz7q5'; // Replace with your Twitch Client ID
+const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';  // Replace with your OAuth token
+const twitchUsername = 'elibeelii'; // Replace with your Twitch username
 const twitchChannel = 'atrioc'
 // Function to update the status message
 function updateStatus(message, isError = false) {
