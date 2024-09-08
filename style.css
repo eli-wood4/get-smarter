@@ -1,34 +1,50 @@
+/* General styling for the page */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  background-color: #1a1a1a;
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-#thumbnails-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #282828;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.thumbnail {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+h1 {
+  margin-bottom: 20px;
 }
 
-.thumbnail img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/* Chat box styling */
+.chat-box {
+  width: 100%;
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #333;
+  padding: 10px;
+  background-color: #202020;
+  border-radius: 5px;
+}
+
+.chat-box p {
+  margin: 0;
+  padding: 5px;
+  background-color: #333;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+}
+
+.chat-box p:nth-child(odd) {
+  background-color: #2a2a2a;
 }
