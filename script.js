@@ -1,23 +1,32 @@
 const socket = io();
 
-socket.on('newThumbnail', (url) => {
-    fetch(`https://www.googleapis.com/youtube/v3/videos?id=${getVideoId(url)}&key=YOUR_API_KEY&part=snippet`)
-        .then(response => response.json())
-        .then(data => {
-            const thumbnailUrl = data.items[0].snippet.thumbnails.medium.url;
-            displayThumbnail(url, thumbnailUrl);
-        });
+socket.on('chatMessage', (data) => {
+    displayMessage(data.user, data.message);
 });
 
-function getVideoId(url) {
-    const urlParams = new URLSearchParams(new URL(url).search);
-    return urlParams.get('v');
-}
+function displayMessage(user, message) {
+    const chatContainer = document.getElementById('chat-container');
+    
+    if (!chatContainer) {
+        // Create chat container if it doesn't exist
+        const container = document.createElement('div');
+        container.id = 'chat-container';
+        container.style.position = 'absolute';
+        container.style.bottom = '0';
+        container.style.left = '0';
+        container.style.width = '100%';
+        container.style.maxHeight = '50%';
+        container.style.overflowY = 'scroll';
+        container.style.backgroundColor = '#000';
+        container.style.color = '#fff';
+        container.style.padding = '10px';
+        document.body.appendChild(container);
+    }
+    
+    const chatMessage = document.createElement('div');
+    chatMessage.innerHTML = `<strong>${user}:</strong> ${message}`;
+    chatContainer.appendChild(chatMessage);
 
-function displayThumbnail(videoUrl, thumbnailUrl) {
-    const grid = document.getElementById('thumbnails-grid');
-    const div = document.createElement('div');
-    div.className = 'thumbnail';
-    div.innerHTML = `<a href="${videoUrl}" target="_blank"><img src="${thumbnailUrl}" alt="Video Thumbnail"></a>`;
-    grid.appendChild(div);
+    // Scroll to the bottom
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
