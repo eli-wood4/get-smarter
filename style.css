@@ -25,6 +25,13 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Status message styling */
+.status {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #ffa500;
+}
+
 /* Chat box styling */
 .chat-box {
   width: 100%;
@@ -47,4 +54,10 @@ h1 {
 
 .chat-box p:nth-child(odd) {
   background-color: #2a2a2a;
+}
+
+/* Error message */
+.error {
+  color: #ff4d4d;
+  font-weight: bold;
 }
