@@ -1,38 +1,22 @@
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
-const tmi = require('tmi.js');
+const twitchClientId = '<your-client-id>';
+const twitchToken = '<your-oauth-token>';
+const twitchUsername = '<your-twitch-username>';
+const twitchChannel = '<channel-name>';
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+const ws = new WebSocket('wss://irc-ws.chat.twitch.tv/');
 
-app.use(express.static('public'));
+ws.onopen = () => {
+  ws.send('PASS oauth:' + twitchToken);
+  ws.send('NICK ' + twitchUsername);
+  ws.send('JOIN #' + twitchChannel);
+};
 
-// Configure Twitch chat client
-const twitchClient = new tmi.Client({
-    channels: ['your_channel'] // Replace 'your_channel' with the Twitch channel you want to monitor
-});
+ws.onmessage = (message) => {
+  console.log('Message from Twitch:', message.data);
 
-twitchClient.connect().catch(console.error);
-
-// Listen for chat messages
-twitchClient.on('message', (channel, tags, message, self) => {
-    if (self) return; // Ignore messages from the bot itself
-
-    // Emit the chat message to all connected clients
-    io.emit('chatMessage', { user: tags.username, message });
-});
-
-// Handle client connection
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    
-    socket.on('disconnect', () => {
-        console.log('A user disconnected');
-    });
-});
-
-server.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
-});
+  // Process and display the message on your website
+  if (message.data.includes('PRIVMSG')) {
+    const chatMessage = message.data.split('PRIVMSG')[1].split(':')[1];
+    document.getElementById('chat').innerHTML += `<p>${chatMessage}</p>`;
+  }
+};
