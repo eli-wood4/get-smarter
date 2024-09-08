@@ -9,27 +9,28 @@ const io = socketIo(server);
 
 app.use(express.static('public'));
 
+// Configure Twitch chat client
 const twitchClient = new tmi.Client({
-    channels: ['your_channel']
+    channels: ['your_channel'] // Replace 'your_channel' with the Twitch channel you want to monitor
 });
 
 twitchClient.connect().catch(console.error);
 
+// Listen for chat messages
 twitchClient.on('message', (channel, tags, message, self) => {
-    if (self) return;
+    if (self) return; // Ignore messages from the bot itself
 
-    const youtubeRegex = /https:\/\/www\.youtube\.com\/watch\?v=[\w-]+/g;
-    const matches = message.match(youtubeRegex);
-
-    if (matches) {
-        matches.forEach(url => {
-            io.emit('newThumbnail', url);
-        });
-    }
+    // Emit the chat message to all connected clients
+    io.emit('chatMessage', { user: tags.username, message });
 });
 
+// Handle client connection
 io.on('connection', (socket) => {
     console.log('A user connected');
+    
+    socket.on('disconnect', () => {
+        console.log('A user disconnected');
+    });
 });
 
 server.listen(3000, () => {
