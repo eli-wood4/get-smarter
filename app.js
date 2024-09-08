@@ -1,8 +1,7 @@
 const twitchClientId = 'YOUR_CLIENT_ID'; // Replace with your Twitch Client ID
 const twitchToken = 'YOUR_OAUTH_TOKEN';  // Replace with your OAuth token
 const twitchUsername = 'YOUR_TWITCH_USERNAME'; // Replace with your Twitch username
-const twitchChannel = 'CHANNEL_NAME'; // Replace with the channel you want to join
-
+const twitchChannel = 'atrioc'
 // Function to update the status message
 function updateStatus(message, isError = false) {
   const statusElement = document.getElementById('status');
