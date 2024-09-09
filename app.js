@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
-  // Fetch video data from YouTube API
+  // Fetch video data from YouTube API, including snippet, contentDetails, and statistics (for view count)
   async function fetchVideoData(videoId) {
-    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${youtubeApiKey}`;
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${youtubeApiKey}`;
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -107,31 +107,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
     const creator = videoData.snippet.channelTitle;
     const duration = formatDuration(videoData.contentDetails.duration);
-    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
-    // Create video card
-    const videoCard = document.createElement('div');
-    videoCard.classList.add('video-card');
-
-    videoCard.innerHTML = `
-      <a href="${videoUrl}" target="_blank">
-        <img src="${thumbnailUrl}" alt="${title}">
-      </a>
-      <div class="video-info">
-        <h3>${title}</h3>
-        <p class="creator">Creator: ${creator}</p>
-        <p class="length">Length: ${duration}</p>
-      </div>
-    `;
-
-    console.log('Adding video card to the grid:', title);
-
-    // Add to grid
-    const videoGrid = document.getElementById('videoGrid');
-    if (videoGrid) {
-      videoGrid.appendChild(videoCard);
-    } else {
-      console.error('Video grid element not found');
-    }
-  }
-});
+    const viewCount = videoData.statistics.viewCount;  // Get view count from statistics
+    const videoUrl = `https://
