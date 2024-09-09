@@ -15,8 +15,9 @@ function getVideoId(url) {
     } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
       videoId = urlObj.searchParams.get('v'); // youtube.com/watch?v=<id>
     }
+    console.log('Extracted video ID:', videoId);
   } catch (error) {
-    console.error('Invalid YouTube URL:', url);
+    console.error('Error extracting video ID:', error);
     return null;
   }
   return videoId;
@@ -24,9 +25,11 @@ function getVideoId(url) {
 
 // Fetch video data from YouTube API
 async function fetchVideoData(videoId) {
+  console.log('Fetching data for video ID:', videoId);
   const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${youtubeApiKey}`;
   const response = await fetch(apiUrl);
   const data = await response.json();
+  console.log('YouTube API response:', data);
   if (data.items && data.items.length > 0) {
     return data.items[0];
   } else {
@@ -60,8 +63,10 @@ function displayChatMessage(message) {
   
   if (youtubeLinkMatch) {
     const youtubeLink = youtubeLinkMatch[0];
-    console.log('YouTube link found:', youtubeLink);
+    console.log('YouTube link found in message:', youtubeLink);
     addVideoFromLink(youtubeLink);
+  } else {
+    console.log('No YouTube link found in message:', message);
   }
 }
 
@@ -98,6 +103,8 @@ async function addVideoFromLink(link) {
       <p class="length">Length: ${duration}</p>
     </div>
   `;
+
+  console.log('Adding video card to the grid:', title);
 
   // Add to grid
   const videoGrid = document.getElementById('videoGrid');
