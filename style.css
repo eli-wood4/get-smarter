@@ -30,7 +30,7 @@ body {
 #videoGrid {
   flex: 1; /* Allow video grid to take up the remaining space */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Responsive grid */
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
