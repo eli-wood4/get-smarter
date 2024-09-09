@@ -8,6 +8,22 @@ body {
   background-color: #ffffE4;
   overflow: hidden; /* Prevent scrolling on the body */
 }
+.sidebar2 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px; /* Increased width for the sidebar */
+  height: 100vh; /* Full viewport height */
+  background: #77DD77; /* Background color for the sidebar */
+  padding: 16px;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  z-index: 1000; /* Ensure the sidebar is on top of other content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Prevent scrolling in the sidebar */
+}
 
 .sidebar {
   position: fixed;
