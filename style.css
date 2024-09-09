@@ -2,21 +2,30 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  display: flex;
+  min-height: 100vh; /* Ensure body takes up full viewport height */
+  overflow: hidden; /* Prevent body from scrolling */
 }
 
 .container {
   display: flex; /* Use flexbox to position the sidebar and grid side by side */
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
 }
 
 .sidebar {
+  position: fixed; /* Fixes the sidebar position */
+  top: 0;
+  left: 0;
   width: 250px; /* Fixed width for the sidebar */
-  height: 100%; /* Fixed width for the sidebar */
+  height: 100vh; /* Full viewport height */
   background: #f4f4f4; /* Background color for the sidebar */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 .sidebar h1 {
@@ -29,12 +38,15 @@ body {
 }
 
 #videoGrid {
-  flex: 1; /* Allow video grid to take up the remaining space */
+  margin-left: 250px; /* Offset to make space for the fixed sidebar */
+  width: calc(100vw - 250px); /* Adjust width to fit the remaining viewport */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .video-card {
