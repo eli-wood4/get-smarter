@@ -1,7 +1,7 @@
 const twitchClientId = 'gp762nuuoqcoxypju8c569th9wz7q5'; // Replace with your Twitch Client ID
 const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';  // Replace with your OAuth token
 const twitchUsername = 'elibeelii'; // Replace with your Twitch username
-const twitchChannel = 'paymoneywubby'
+const twitchChannel = 'elibeelii'
 const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E'; // Replace with your YouTube API key
 
 // Extract video ID from YouTube URL
