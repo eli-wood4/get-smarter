@@ -5,7 +5,7 @@ body {
   font-family: Arial, sans-serif;
   display: flex;
   min-height: 100vh;
-  background-color: #fff0db;
+  background-color: #ffffE4;
   overflow: hidden; /* Prevent scrolling on the body */
 }
 
