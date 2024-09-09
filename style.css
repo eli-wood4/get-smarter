@@ -81,12 +81,12 @@ body {
 
 .video-card img {
   width: 100%;    /* Image fills the width of its container */
-  height: 200px;  /* Set a fixed height for the image */
+  height: 250px;  /* Set a fixed height for the image */
   object-fit: cover; /* Ensure the image covers the area without distortion */
 }
 
 .video-card .video-info {
-  padding: 8px;
+  padding: 2px;
   flex-grow: 1; /* Allow content to grow and fill the available space */
 }
 
