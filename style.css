@@ -4,33 +4,38 @@ body {
   font-family: Arial, sans-serif;
   display: flex;
   min-height: 100vh;
+  overflow: hidden; /* Prevent scrolling on the body */
 }
 
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px; /* Adjust width as needed */
+  width: 350px; /* Increased width for the sidebar */
   height: 100vh; /* Full viewport height */
   background: #f4f4f4; /* Background color for the sidebar */
   padding: 16px;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   z-index: 1000; /* Ensure the sidebar is on top of other content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar h1 {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 24px;
+  font-size: 36px; /* Increased font size */
   color: #333;
   text-align: center;
   margin: 0;
+  line-height: 1.2; /* Adjust line height for better vertical spacing */
 }
 
 #videoGrid {
-  margin-left: 250px; /* Offset to make space for the fixed sidebar */
-  width: calc(100vw - 250px); /* Adjust width to fit the remaining viewport */
+  margin-left: 350px; /* Offset to make space for the wider fixed sidebar */
+  width: calc(100vw - 350px); /* Adjust width to fit the remaining viewport */
   display: grid;
   grid-template-columns: repeat(3, minmax(300px, 1fr)); /* Three columns with a minimum width of 300px */
   gap: 16px; /* Space between grid items */
