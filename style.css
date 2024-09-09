@@ -6,7 +6,8 @@ body {
 
 #videoGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust width to fit more thumbnails */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Original width setting */
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
