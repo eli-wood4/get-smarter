@@ -83,7 +83,7 @@ body {
 
 .video-card img {
   width: 100%;    /* Image fills the width of its container */
-  height: 250px;  /* Adjust the height for the image */
+  height: 350px;  /* Adjust the height for the image */
   object-fit: cover; /* Ensure the image covers the area without distortion */
 }
 
