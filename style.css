@@ -42,6 +42,15 @@ body {
   margin: 0;
   line-height: 1.2; /* Adjust line height for better vertical spacing */
 }
+.sidebar h3 {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 58px; /* Increased font size */
+  color: #63d863;
+  text-align: center;
+  margin: 0;
+  line-height: 1.2; /* Adjust line height for better vertical spacing */
+}
 
 #videoGrid {
   margin-left: 350px; /* Offset to make space for the wider fixed sidebar */
