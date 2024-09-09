@@ -60,7 +60,7 @@ body {
   margin-left: 350px; /* Offset to make space for the wider fixed sidebar */
   width: calc(100vw - 350px); /* Adjust width to fit the remaining viewport */
   display: grid;
-  grid-template-columns: repeat(5, minmax(325px, 1fr)); /* Adjust column size */
+  grid-template-columns: repeat(4, minmax(325px, 1fr)); /* Adjust column size */
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
@@ -78,12 +78,12 @@ body {
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column; /* Stack image and info vertically */
-  height: 450; /* Allow height to adjust based on content */
+  height: auto; /* Allow height to adjust based on content */
 }
 
 .video-card img {
   width: 100%;    /* Image fills the width of its container */
-  height: 350px;  /* Adjust the height for the image */
+  height: 250px;  /* Adjust the height for the image */
   object-fit: cover; /* Ensure the image covers the area without distortion */
 }
 
