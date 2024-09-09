@@ -1,109 +1,137 @@
-/* Reset some default styles */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  min-height: 100vh;
-  overflow: hidden; /* Prevent scrolling on the body */
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';  // Replace with your OAuth token
+  const twitchUsername = 'elibeelii'; // Replace with your Twitch username
+  const twitchChannel = 'elibeelii'; // Replace with your Twitch channel
+  const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E'; // Replace with your YouTube API key
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 350px; /* Increased width for the sidebar */
-  height: 100vh; /* Full viewport height */
-  background: #77DD77; /* Background color for the sidebar */
-  padding: 16px;
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  z-index: 1000; /* Ensure the sidebar is on top of other content */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* Prevent scrolling in the sidebar */
-}
+  // Set up WebSocket connection to Twitch
+  const ws = new WebSocket('wss://irc-ws.chat.twitch.tv/');
 
-.sidebar h1 {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: 52px; /* Increased font size */
-  color: #1b331b;
-  text-align: center;
-  margin: 0;
-  line-height: 1.2; /* Adjust line height for better vertical spacing */
-}
-.sidebar h2 {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: 52px; /* Increased font size */
-  color: #60b360;
-  text-align: center;
-  margin: 0;
-  line-height: 1.2; /* Adjust line height for better vertical spacing */
-  opacity: 0.8; /* Adjust this value for the desired transparency */
-}
-.sidebar h3 {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: 52px; /* Increased font size */
-  color: #60b360;
-  text-align: center;
-  margin: 0;
-  line-height: 1.2; /* Adjust line height for better vertical spacing */
-  opacity: 0.3; /* Adjust this value for the desired transparency */
-}
+  ws.onopen = () => {
+    console.log("Connected to Twitch chat");
+    ws.send('PASS oauth:' + twitchToken);
+    ws.send('NICK ' + twitchUsername);
+    ws.send('JOIN #' + twitchChannel);
+  };
 
-#videoGrid {
-  margin-left: 350px; /* Offset to make space for the wider fixed sidebar */
-  width: calc(100vw - 350px); /* Adjust width to fit the remaining viewport */
-  display: grid;
-  grid-template-columns: repeat(4, minmax(300px, 1fr)); /* Adjust column size */
-  gap: 16px; /* Space between grid items */
-  padding: 16px;
-  box-sizing: border-box;
-  overflow-y: auto; /* Enable vertical scrolling if needed */
-  height: 100vh; /* Ensure the grid takes up the full viewport height */
-  position: relative; /* Allow scrolling within the grid */
-}
+  ws.onmessage = (message) => {
+    console.log('Message from Twitch:', message.data);
 
-.video-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column; /* Stack image and info vertically */
-  height: 400px; /* Adjust height as necessary */
-}
+    if (message.data.includes('PRIVMSG')) {
+      const splitMessage = message.data.split(' :');
+      if (splitMessage.length >= 2) {
+        const chatMessage = splitMessage[1].trim();
+        console.log('Chat message:', chatMessage);
+        displayChatMessage(chatMessage);
+      }
+    }
+  };
 
-.video-card img {
-  width: 100%;    /* Image fills the width of its container */
-  height: 250px;  /* Adjust the height for the image */
-  object-fit: cover; /* Ensure the image covers the area without distortion */
-}
+  ws.onerror = (error) => {
+    console.error('WebSocket Error:', error);
+  };
 
-.video-card .video-info {
-  padding: 12px;
-  flex-grow: 1; /* Allow content to grow and fill the available space */
-}
+  ws.onclose = () => {
+    console.log('Connection closed.');
+  };
 
-.video-card h3 {
-  font-size: 16px;  /* Increased font size for video title */
-  margin: 0;
-  white-space: nowrap; /* Prevent title from wrapping */
-  overflow: hidden; /* Hide overflow text */
-  text-overflow: ellipsis; /* Add ellipsis if title is too long */
-}
+  // Extract video ID from YouTube URL (including youtu.be links)
+  function getVideoId(url) {
+    try {
+      const urlObj = new URL(url);
+      if (urlObj.hostname === 'youtu.be') {
+        return urlObj.pathname.slice(1); // youtu.be/<id>
+      } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
+        return urlObj.searchParams.get('v'); // youtube.com/watch?v=<id>
+      }
+    } catch (error) {
+      console.error('Error extracting video ID:', error);
+    }
+    return null;
+  }
 
-.video-card .creator,
-.video-card .length {
-  font-size: 14px;  /* Font size for creator and length */
-  color: #555;
-}
+  // Fetch video data from YouTube API
+  async function fetchVideoData(videoId) {
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${youtubeApiKey}`;
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+      const data = await response.json();
+      return data.items && data.items.length > 0 ? data.items[0] : null;
+    } catch (error) {
+      console.error('Error fetching video data:', error);
+      return null;
+    }
+  }
 
-.video-card:hover {
-  transform: scale(1.06);
-}
+  // Format video duration from ISO 8601 to hh:mm:ss
+  function formatDuration(duration) {
+    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    const hours = (match[1] || '').replace('H', '');
+    const minutes = (match[2] || '').replace('M', '');
+    const seconds = (match[3] || '').replace('S', '');
+    return [hours || '00', minutes || '00', seconds || '00'].join(':');
+  }
+
+  // Display chat message and process YouTube links
+  function displayChatMessage(message) {
+    const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
+    const youtubeLinkMatch = message.match(youtubeLinkRegex);
+    
+    if (youtubeLinkMatch) {
+      const youtubeLink = youtubeLinkMatch[0];
+      console.log('YouTube link found in message:', youtubeLink);
+      addVideoFromLink(youtubeLink);
+    } else {
+      console.log('No YouTube link found in message:', message);
+    }
+  }
+
+  // Add video to the grid using a YouTube link
+  async function addVideoFromLink(link) {
+    const videoId = getVideoId(link);
+    
+    if (!videoId) {
+      console.error('Invalid YouTube link:', link);
+      return;
+    }
+
+    const videoData = await fetchVideoData(videoId);
+    
+    if (!videoData) {
+      console.error('Failed to fetch video data:', link);
+      return;
+    }
+
+    const title = videoData.snippet.title;
+    const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
+    const creator = videoData.snippet.channelTitle;
+    const duration = formatDuration(videoData.contentDetails.duration);
+    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+    // Create video card
+    const videoCard = document.createElement('div');
+    videoCard.classList.add('video-card');
+
+    videoCard.innerHTML = `
+      <a href="${videoUrl}" target="_blank">
+        <img src="${thumbnailUrl}" alt="${title}">
+      </a>
+      <div class="video-info">
+        <h3>${title}</h3>
+        <p class="creator">Creator: ${creator}</p>
+        <p class="length">Length: ${duration}</p>
+      </div>
+    `;
+
+    console.log('Adding video card to the grid:', title);
+
+    // Add to grid
+    const videoGrid = document.getElementById('videoGrid');
+    if (videoGrid) {
+      videoGrid.appendChild(videoCard);
+    } else {
+      console.error('Video grid element not found');
+    }
+  }
+});
