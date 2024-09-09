@@ -38,7 +38,7 @@ body {
   margin-left: 350px; /* Offset to make space for the wider fixed sidebar */
   width: calc(100vw - 350px); /* Adjust width to fit the remaining viewport */
   display: grid;
-  grid-template-columns: repeat(3, minmax(300px, 1fr)); /* Three columns with a minimum width of 300px */
+  grid-template-columns: repeat(3, minmax(250px, 1fr)); /* Three columns with a minimum width of 300px */
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
