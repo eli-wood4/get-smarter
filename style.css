@@ -21,6 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* Prevent scrolling in the sidebar */
 }
 
 .sidebar h1 {
@@ -42,6 +43,8 @@ body {
   padding: 16px;
   box-sizing: border-box;
   overflow-y: auto; /* Enable vertical scrolling if needed */
+  height: 100vh; /* Ensure the grid takes up the full viewport height */
+  position: relative; /* Allow scrolling within the grid */
 }
 
 .video-card {
