@@ -27,7 +27,7 @@ body {
 .sidebar h1 {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 36px; /* Increased font size */
+  font-size: 64px; /* Increased font size */
   color: #333;
   text-align: center;
   margin: 0;
@@ -71,13 +71,13 @@ body {
 }
 
 .video-card h3 {
-  font-size: 18px;  /* Increased font size for video title */
+  font-size: 2px;  /* Increased font size for video title */
   margin: 0;
 }
 
 .video-card .creator,
 .video-card .length {
-  font-size: 14px;  /* Font size for creator and length */
+  font-size: 24px;  /* Font size for creator and length */
   color: #555;
 }
 
