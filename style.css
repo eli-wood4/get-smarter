@@ -24,6 +24,14 @@ body {
   justify-content: center;
   overflow: hidden; /* Prevent scrolling in the sidebar */
 }
+.sidebar2 h1 {
+  writing-mode: vertical-rl;
+  font-size: 100px; /* Increased font size */
+  color: #1b331b;
+  text-align: center;
+  margin: 0;
+  line-height: 1.2; /* Adjust line height for better vertical spacing */
+}
 
 .sidebar {
   position: fixed;
@@ -50,6 +58,7 @@ body {
   text-align: center;
   margin: 0;
   line-height: 1.2; /* Adjust line height for better vertical spacing */
+  opacity: 0.8; /* Adjust this value for the desired transparency */
 }
 
 .sidebar h2 {
