@@ -27,7 +27,7 @@ body {
 .sidebar h1 {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 58px; /* Increased font size */
+  font-size: 54px; /* Increased font size */
   color: #1b331b;
   text-align: center;
   margin: 0;
@@ -36,7 +36,7 @@ body {
 .sidebar h2 {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 58px; /* Increased font size */
+  font-size: 54px; /* Increased font size */
   color: #60b360;
   text-align: center;
   margin: 0;
@@ -46,7 +46,7 @@ body {
 .sidebar h3 {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 58px; /* Increased font size */
+  font-size: 54px; /* Increased font size */
   color: #60b360;
   text-align: center;
   margin: 0;
