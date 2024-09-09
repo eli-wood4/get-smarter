@@ -4,11 +4,12 @@ body {
 }
 
 #videoGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust width to fit more thumbnails */
-  gap: 16px; /* Space between grid items */
-  padding: 16px;
-  box-sizing: border-box;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  padding: 5px;
+  border: 1px solid blue;
+  background-color: yellow;
 }
 
 .video-card {
