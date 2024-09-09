@@ -22,7 +22,7 @@ body {
 }
 
 .video-card img {
-  width: 100%;    /* Image fills the width of its container */
+  width: 50%;    /* Image fills the width of its container */
   height: auto;   /* Maintain aspect ratio */
 }
 
