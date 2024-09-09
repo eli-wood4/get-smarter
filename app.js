@@ -17,12 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
   ws.onmessage = (message) => {
     console.log('Message from Twitch:', message.data);
 
-    // Check if the message contains "PRIVMSG" (chat message)
     if (message.data.includes('PRIVMSG')) {
-      // The actual message starts after the second ':'
       const splitMessage = message.data.split(' :');
       if (splitMessage.length >= 2) {
-        const chatMessage = splitMessage[1].trim(); // This captures everything after the second ':'
+        const chatMessage = splitMessage[1].trim();
         console.log('Chat message:', chatMessage);
         displayChatMessage(chatMessage);
       }
@@ -75,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return [hours || '00', minutes || '00', seconds || '00'].join(':');
   }
 
-  // Display chat message in the chat box
+  // Display chat message and process YouTube links
   function displayChatMessage(message) {
     const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
     const youtubeLinkMatch = message.match(youtubeLinkRegex);
