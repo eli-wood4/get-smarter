@@ -46,10 +46,11 @@ body {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: 58px; /* Increased font size */
-  color: #71bb71;
+  color: #60b360;
   text-align: center;
   margin: 0;
   line-height: 1.2; /* Adjust line height for better vertical spacing */
+  opacity: 0.5; /* Adjust this value for the desired transparency */
 }
 
 #videoGrid {
