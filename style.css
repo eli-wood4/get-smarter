@@ -41,6 +41,7 @@ body {
   text-align: center;
   margin: 0;
   line-height: 1.2; /* Adjust line height for better vertical spacing */
+  opacity: 0.8; /* Adjust this value for the desired transparency */
 }
 .sidebar h3 {
   writing-mode: vertical-rl;
@@ -50,7 +51,7 @@ body {
   text-align: center;
   margin: 0;
   line-height: 1.2; /* Adjust line height for better vertical spacing */
-  opacity: 0.5; /* Adjust this value for the desired transparency */
+  opacity: 0.3; /* Adjust this value for the desired transparency */
 }
 
 #videoGrid {
