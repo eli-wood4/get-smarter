@@ -86,12 +86,12 @@ body {
 }
 
 .video-card .video-info {
-  padding: 12px;
+  padding: 6px;
   flex-grow: 1; /* Allow content to grow and fill the available space */
 }
 
 .video-card h3 {
-  font-size: 16px;  /* Increased font size for video title */
+  font-size: 24px;  /* Increased font size for video title */
   margin: 0;
   white-space: nowrap; /* Prevent title from wrapping */
   overflow: hidden; /* Hide overflow text */
