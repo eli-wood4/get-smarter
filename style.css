@@ -10,6 +10,7 @@ body {
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
+  min-height: 100vh; /* Ensures the grid takes up at least the full viewport height */
 }
 
 .video-card {
@@ -19,6 +20,8 @@ body {
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  padding: 8px; /* Adds padding inside the video card */
+  max-width: 100%; /* Ensures video cards do not exceed their container's width */
 }
 
 .video-card img {
@@ -28,6 +31,8 @@ body {
 
 .video-card .video-info {
   padding: 8px;
+  background: #f9f9f9; /* Light background for the info section */
+  text-align: center; /* Center-aligns text inside the info section */
 }
 
 .video-card h3 {
@@ -43,4 +48,21 @@ body {
 
 .video-card:hover {
   transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  #videoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Fewer columns on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .video-card h3 {
+    font-size: 14px; /* Smaller text on very small screens */
+  }
+
+  .video-card .creator,
+  .video-card .length {
+    font-size: 12px; /* Smaller text for creator and length */
+  }
 }
