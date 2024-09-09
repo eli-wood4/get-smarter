@@ -25,7 +25,6 @@ body {
   overflow: hidden; /* Prevent scrolling in the sidebar */
 }
 .sidebar2 h1 {
-  writing-mode: vertical-rl;
   font-size: 100px; /* Increased font size */
   color: #1b331b;
   text-align: center;
