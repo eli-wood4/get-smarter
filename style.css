@@ -27,11 +27,12 @@ body {
 }
 
 .sidebar2 h1 {
-  font-size: 100px; /* Increased font size */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 150px; /* Increased font size */
   color: #1b331b;
   text-align: center;
   margin: 0;
-  line-height: 1.2; /* Adjust line height for better vertical spacing */
 }
 
 .sidebar {
@@ -58,7 +59,7 @@ body {
   color: #1b331b;
   text-align: center;
   margin: 0;
-  line-height: 1.2; /* Adjust line height for better vertical spacing */
+  line-height: 1.1; /* Adjust line height for better vertical spacing */
   opacity: 0.8; /* Adjust this value for the desired transparency */
 }
 
@@ -69,7 +70,7 @@ body {
   color: #60b360;
   text-align: center;
   margin: 0;
-  line-height: 1.2; /* Adjust line height for better vertical spacing */
+  line-height: 1.1; /* Adjust line height for better vertical spacing */
   opacity: 0.8; /* Adjust this value for the desired transparency */
 }
 
@@ -80,7 +81,7 @@ body {
   color: #60b360;
   text-align: center;
   margin: 0;
-  line-height: 1.2; /* Adjust line height for better vertical spacing */
+  line-height: 1.1; /* Adjust line height for better vertical spacing */
   opacity: 0.3; /* Adjust this value for the desired transparency */
 }
 
