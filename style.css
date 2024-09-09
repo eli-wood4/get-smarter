@@ -97,7 +97,11 @@ body {
   overflow: hidden; /* Hide overflow text */
   text-overflow: ellipsis; /* Add ellipsis if title is too long */
 }
-
+.video-card .views {
+  font-size: 14px;  /* Font size for view count */
+  color: #777;      /* Color for views text */
+  margin-top: 4px;  /* Small margin for spacing */
+}
 .video-card .creator,
 .video-card .length {
   font-size: 14px;  /* Font size for creator and length */
