@@ -90,13 +90,16 @@ async function addVideoFromLink(link) {
   const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
   const creator = videoData.snippet.channelTitle;
   const duration = formatDuration(videoData.contentDetails.duration);
+  const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
   // Create video card
   const videoCard = document.createElement('div');
   videoCard.classList.add('video-card');
 
   videoCard.innerHTML = `
-    <img src="${thumbnailUrl}" alt="${title}">
+    <a href="${videoUrl}" target="_blank">
+      <img src="${thumbnailUrl}" alt="${title}">
+    </a>
     <div class="video-info">
       <h3>${title}</h3>
       <p class="creator">Creator: ${creator}</p>
@@ -110,6 +113,7 @@ async function addVideoFromLink(link) {
   const videoGrid = document.getElementById('videoGrid');
   videoGrid.appendChild(videoCard);
 }
+
 
 // Connect to Twitch chat using WebSocket
 const ws = new WebSocket('wss://irc-ws.chat.twitch.tv/');
