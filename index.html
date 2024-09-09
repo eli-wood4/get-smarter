@@ -3,11 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Video Grid</title>
+  <title>Static Video Grid</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="videoGrid"></div> <!-- Video grid container -->
-  <script src="app.js"></script> <!-- Link to your JavaScript file -->
+  <div id="videoGrid">
+    <div class="video-card">
+      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
+        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Sample Video">
+      </a>
+      <div class="video-info">
+        <h3>Sample Video Title</h3>
+        <p class="creator">Creator: Sample Creator</p>
+        <p class="length">Length: 00:00</p>
+      </div>
+    </div>
+    <!-- Add more static video cards here -->
+  </div>
 </body>
 </html>
