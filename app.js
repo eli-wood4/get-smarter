@@ -124,10 +124,15 @@ ws.onopen = () => {
 ws.onmessage = (message) => {
   console.log('Message from Twitch:', message.data);
 
-  // Process chat message
+  // Check if the message contains "PRIVMSG" (chat message)
   if (message.data.includes('PRIVMSG')) {
-    const chatMessage = message.data.split('PRIVMSG')[1].split(':')[1];
-    displayChatMessage(chatMessage);
+    // The actual message starts after the second ':'
+    const splitMessage = message.data.split(' :');
+    if (splitMessage.length >= 2) {
+      const chatMessage = splitMessage[1].trim(); // This captures everything after the second ':'
+      console.log('Chat message:', chatMessage);
+      displayChatMessage(chatMessage);
+    }
   }
 };
 
