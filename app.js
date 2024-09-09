@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';  // Replace with your OAuth token
   const twitchUsername = 'elibeelii'; // Replace with your Twitch username
-  const twitchChannel = 'elibeelii'; // Replace with your Twitch channel
-  const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E'; // Replace with your YouTube API key
-
+  const twitchChannel = 'atrioc'; // Replace with your Twitch channel
+  const twitchToken = process.env.TWITCH_TOKEN;
+  const youtubeApiKey = process.env.YOUTUBE_API_KEY;
   // Set up WebSocket connection to Twitch
   const ws = new WebSocket('wss://irc-ws.chat.twitch.tv/');
 
