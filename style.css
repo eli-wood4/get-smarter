@@ -7,7 +7,7 @@ body {
 #videoGrid {
   display: grid;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Original width setting */
+  grid-template-columns: repeat(auto-fill, minmax(1fr, 1fr)); /* Original width setting */
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
