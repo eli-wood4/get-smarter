@@ -32,6 +32,7 @@ body {
   text-align: center;
   margin: 0;
   line-height: 1.2; /* Adjust line height for better vertical spacing */
+}
 .sidebar h2 {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
