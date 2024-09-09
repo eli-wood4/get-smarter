@@ -9,7 +9,7 @@ body {
 
 .container {
   display: flex; /* Use flexbox to position the sidebar and grid side by side */
-  height: 100vh; /* Full viewport height */
+  height: 100vh; /* Full viewport height for the sidebar */
   width: 100vw; /* Full viewport width */
 }
 
@@ -45,7 +45,8 @@ body {
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
-  height: 100vh; /* Full viewport height */
+  height: auto; /* Allow height to expand with content */
+  min-height: 100vh; /* Ensure minimum height of the grid area is full viewport height */
   overflow-y: auto; /* Enable vertical scrolling */
 }
 
