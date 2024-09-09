@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const twitchChannel = 'atrioc'; // Replace with your Twitch channel
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';
   const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E';
+  
   // Set up WebSocket connection to Twitch
   const ws = new WebSocket('wss://irc-ws.chat.twitch.tv/');
 
@@ -11,10 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
     ws.send('PASS oauth:' + twitchToken);
     ws.send('NICK ' + twitchUsername);
     ws.send('JOIN #' + twitchChannel);
+
+    // Send PING to keep the connection alive every 5 minutes
+    setInterval(() => {
+      ws.send('PING :tmi.twitch.tv');
+      console.log('Sent PING to keep the connection alive');
+    }, 5 * 60 * 1000); // 5 minutes in milliseconds
   };
 
   ws.onmessage = (message) => {
     console.log('Message from Twitch:', message.data);
+
+    // Respond to PING with PONG to keep the connection alive
+    if (message.data.startsWith('PING')) {
+      ws.send('PONG :tmi.twitch.tv');
+      console.log('Responded with PONG');
+    }
 
     if (message.data.includes('PRIVMSG')) {
       const splitMessage = message.data.split(' :');
