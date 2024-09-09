@@ -13,7 +13,7 @@ body {
   left: 0;
   width: 350px; /* Increased width for the sidebar */
   height: 100vh; /* Full viewport height */
-  background: #77DD77; /* Background color for the sidebar */
+  background: #f4f4f4; /* Background color for the sidebar */
   padding: 16px;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -22,31 +22,50 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden; /* Prevent scrolling in the sidebar */
+  flex-direction: column; /* Align items vertically */
+  position: relative; /* Important for absolute positioning of the text */
 }
 
-.sidebar h1 {
+.sidebar::before {
+  content: "atrioc atrioc atrioc atrioc atrioc atrioc"; /* Repeated text */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(0, 0, 0, 0.05); /* Light watermark color */
+  font-size: 48px; /* Font size for the watermark */
+  white-space: nowrap;
+  text-transform: uppercase;
+  overflow: hidden;
+  z-index: -1; /* Behind other elements */
+  transform: rotate(-45deg); /* Diagonal text */
+}
+
+.sidebar-content {
+  z-index: 1; /* Ensures content is on top of the watermark */
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center; /* Center items vertically */
+  height: 100%; /* Full height of the sidebar */
+}
+
+.sidebar-content h1 {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 58px; /* Increased font size */
-  color: #1b331b;
+  font-size: 36px; /* Increased font size */
+  color: #333;
   text-align: center;
   margin: 0;
   line-height: 1.2; /* Adjust line height for better vertical spacing */
-.sidebar h2 {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: 58px; /* Increased font size */
-  color: #60b360;
-  text-align: center;
-  margin: 0;
-  line-height: 1.2; /* Adjust line height for better vertical spacing */
+  width: 100%; /* Full width for each title */
 }
 
 #videoGrid {
   margin-left: 350px; /* Offset to make space for the wider fixed sidebar */
   width: calc(100vw - 350px); /* Adjust width to fit the remaining viewport */
   display: grid;
-  grid-template-columns: repeat(3, minmax(250px, 1fr)); /* Three columns with a minimum width of 300px */
+  grid-template-columns: repeat(3, minmax(300px, 1fr)); /* Three columns with a minimum width of 300px */
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
@@ -79,13 +98,13 @@ body {
 }
 
 .video-card h3 {
-  font-size: 2px;  /* Increased font size for video title */
+  font-size: 18px;  /* Increased font size for video title */
   margin: 0;
 }
 
 .video-card .creator,
 .video-card .length {
-  font-size: 24px;  /* Font size for creator and length */
+  font-size: 14px;  /* Font size for creator and length */
   color: #555;
 }
 
