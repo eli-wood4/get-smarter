@@ -68,7 +68,7 @@ body {
 }
 
 .video-card {
-  background: #fff;
+  background: #A9A9A9;
   border: 1px solid #A9A9A9;
   border-radius: 8px;
   overflow: hidden;
@@ -81,7 +81,7 @@ body {
 
 .video-card img {
   width: 100%;    /* Image fills the width of its container */
-  height: 250px;  /* Set a fixed height for the image */
+  height: 260px;  /* Set a fixed height for the image */
   object-fit: cover; /* Ensure the image covers the area without distortion */
 }
 
