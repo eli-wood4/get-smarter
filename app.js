@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
-  // Fetch video data from YouTube API
+  // Fetch video data from YouTube API, including snippet, contentDetails, and statistics (for view count)
   async function fetchVideoData(videoId) {
-    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${youtubeApiKey}`;
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${youtubeApiKey}`;
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
     const creator = videoData.snippet.channelTitle;
     const duration = formatDuration(videoData.contentDetails.duration);
+    const viewCount = videoData.statistics.viewCount;  // Get view count from statistics
     const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
     // Create video card
@@ -121,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <h3>${title}</h3>
         <p class="creator">Creator: ${creator}</p>
         <p class="length">Length: ${duration}</p>
+        <p class="views">Views: ${viewCount.toLocaleString()}</p> <!-- Display formatted view count -->
       </div>
     `;
 
