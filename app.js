@@ -4,10 +4,22 @@ const twitchUsername = 'elibeelii'; // Replace with your Twitch username
 const twitchChannel = 'elibeelii'
 const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E'; // Replace with your YouTube API key
 
-// Extract video ID from YouTube URL
+
+// Extract video ID from YouTube URL (including youtu.be links)
 function getVideoId(url) {
-  const urlObj = new URL(url);
-  return urlObj.searchParams.get('v');
+  let videoId;
+  try {
+    const urlObj = new URL(url);
+    if (urlObj.hostname === 'youtu.be') {
+      videoId = urlObj.pathname.slice(1); // youtu.be/<id>
+    } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
+      videoId = urlObj.searchParams.get('v'); // youtube.com/watch?v=<id>
+    }
+  } catch (error) {
+    console.error('Invalid YouTube URL:', url);
+    return null;
+  }
+  return videoId;
 }
 
 // Fetch video data from YouTube API
@@ -15,7 +27,12 @@ async function fetchVideoData(videoId) {
   const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${youtubeApiKey}`;
   const response = await fetch(apiUrl);
   const data = await response.json();
-  return data.items[0];
+  if (data.items && data.items.length > 0) {
+    return data.items[0];
+  } else {
+    console.error('No video data found for videoId:', videoId);
+    return null;
+  }
 }
 
 // Format video duration from ISO 8601 to hh:mm:ss
@@ -38,11 +55,12 @@ function displayChatMessage(message) {
   chatBox.scrollTop = chatBox.scrollHeight;
 
   // Check for YouTube links in the message
-  const youtubeLinkRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=[\w-]+)/;
+  const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
   const youtubeLinkMatch = message.match(youtubeLinkRegex);
   
   if (youtubeLinkMatch) {
     const youtubeLink = youtubeLinkMatch[0];
+    console.log('YouTube link found:', youtubeLink);
     addVideoFromLink(youtubeLink);
   }
 }
@@ -108,9 +126,8 @@ ws.onmessage = (message) => {
 
 ws.onerror = (error) => {
   console.error('WebSocket Error:', error);
-  updateStatus("Failed to connect. Please try again.", true);
 };
 
 ws.onclose = () => {
-  updateStatus("Connection closed. Reconnect and try again.", true);
+  console.log('Connection closed.');
 };
