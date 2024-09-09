@@ -10,6 +10,7 @@ body {
 
 .sidebar {
   width: 250px; /* Fixed width for the sidebar */
+  height: 100%; /* Fixed width for the sidebar */
   background: #f4f4f4; /* Background color for the sidebar */
   display: flex;
   align-items: center;
