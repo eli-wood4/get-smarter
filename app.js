@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </a>
       <div class="video-info">
         <h3>${title}</h3>
-        <p class="creator"><b> ${creator}</p>
+        <p class="x"><b> ${creator}</p>
         <p class="length"> ${duration}</p>
         <p class="views"> ${viewCount.toLocaleString()}</b></p>
       </div>
