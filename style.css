@@ -78,7 +78,7 @@ body {
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column; /* Stack image and info vertically */
-  height: auto; /* Allow height to adjust based on content */
+  height: 350; /* Allow height to adjust based on content */
 }
 
 .video-card img {
