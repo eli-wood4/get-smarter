@@ -99,7 +99,8 @@ body {
 }
 
 .video-card .creator,
-.video-card .length {
+.video-card .length, 
+.video-card .views{
   font-size: 14px;  /* Font size for creator and length */
   color: #555;
 }
