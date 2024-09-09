@@ -6,7 +6,6 @@ body {
 
 #videoGrid {
   display: grid;
-  display: grid;
   grid-template-columns: repeat(4, 1fr); /* Three columns */
   gap: 16px; /* Space between grid items */
   padding: 16px;
