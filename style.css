@@ -33,7 +33,8 @@ body {
   text-align: center;
   margin: 0;
   position: absolute;
-  bottom: 30px; /* Move to the bottom of the container */
+  left: 55%;
+  bottom: 35px; /* Move to the bottom of the container */
 }
 
 .sidebar2 h2 {
