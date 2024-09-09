@@ -7,7 +7,7 @@ body {
 #videoGrid {
   display: grid;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  grid-template-columns: repeat(4, 1fr); /* Three columns */
   gap: 16px; /* Space between grid items */
   padding: 16px;
   box-sizing: border-box;
@@ -25,7 +25,7 @@ body {
 
 .video-card img {
   width: 100%;    /* Image fills the width of its container */
-  height: auto;   /* Maintain aspect ratio */
+  height: 100%;   /* Maintain aspect ratio */
 }
 
 .video-card .video-info {
@@ -33,7 +33,7 @@ body {
 }
 
 .video-card h3 {
-  font-size: 14px;  /* Adjust font size for narrower cards */
+  font-size: 24px;  /* Adjust font size for narrower cards */
   margin: 0;
 }
 
