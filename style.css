@@ -28,11 +28,14 @@ body {
 
 .sidebar2 h1 {
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
   font-size: 150px; /* Increased font size */
   color: #1b331b;
   text-align: center;
   margin: 0;
+  position: absolute;
+  bottom: 0; /* Move to the bottom of the container */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
 }
 
 .sidebar {
