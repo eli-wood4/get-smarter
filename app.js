@@ -115,6 +115,7 @@ async function addVideoFromLink(link) {
 }
 
 
+
 // Connect to Twitch chat using WebSocket
 const ws = new WebSocket('wss://irc-ws.chat.twitch.tv/');
 
