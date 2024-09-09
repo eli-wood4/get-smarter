@@ -34,8 +34,6 @@ body {
   margin: 0;
   position: absolute;
   bottom: 0; /* Move to the bottom of the container */
-  left: 50%;
-  transform: translateX(-50%); /* Center horizontally */
 }
 
 .sidebar {
