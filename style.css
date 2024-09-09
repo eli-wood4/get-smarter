@@ -72,7 +72,7 @@ body {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column; /* Stack image and info vertically */
@@ -97,10 +97,10 @@ body {
 
 .video-card .creator,
 .video-card .length {
-  font-size: 24px;  /* Font size for creator and length */
+  font-size: 16px;  /* Font size for creator and length */
   color: #555;
 }
 
 .video-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
