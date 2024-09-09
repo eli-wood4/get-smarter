@@ -91,7 +91,7 @@ body {
 }
 
 .video-card h3 {
-  font-size: 24px;  /* Increased font size for video title */
+  font-size: 20px;  /* Increased font size for video title */
   margin: 0;
   white-space: nowrap; /* Prevent title from wrapping */
   overflow: hidden; /* Hide overflow text */
