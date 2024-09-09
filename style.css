@@ -76,7 +76,7 @@ body {
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column; /* Stack image and info vertically */
-  height: 300px; /* Adjust height as necessary */
+  height: 360px; /* Adjust height as necessary */
 }
 
 .video-card img {
@@ -86,7 +86,7 @@ body {
 }
 
 .video-card .video-info {
-  padding: 4px;
+  padding: 12px;
   flex-grow: 1; /* Allow content to grow and fill the available space */
 }
 
