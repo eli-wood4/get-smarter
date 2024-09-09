@@ -88,12 +88,14 @@ body {
 }
 
 .video-card .video-info {
-  padding: 4px;
+  padding: 8px; /* Adjust padding for better spacing */
   flex-grow: 1; /* Allow content to grow and fill the available space */
+  display: flex;
+  flex-direction: column;
 }
 
 .video-card h3 {
-  font-size: 20px;  /* Increased font size for video title */
+  font-size: 20px;  /* Font size for video title */
   margin: 0;
   white-space: normal; /* Allow text to wrap */
   overflow: hidden; /* Hide overflow text */
@@ -101,11 +103,22 @@ body {
   line-height: 1.4; /* Adjust line height for better readability */
 }
 
+.video-card .video-details {
+  display: flex;
+  justify-content: space-between; /* Space out the details */
+  font-size: 14px; /* Font size for video details */
+  color: #555;
+}
+
 .video-card .creator,
 .video-card .length, 
 .video-card .views {
-  font-size: 14px;  /* Font size for creator, length, and views */
-  color: #555;
+  margin: 0; /* Remove default margin */
+}
+
+.video-card .length,
+.video-card .views {
+  margin-left: 8px; /* Space between details */
 }
 
 .video-card:hover {
