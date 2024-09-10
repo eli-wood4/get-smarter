@@ -120,7 +120,7 @@ async function addVideoFromLink(link, chatterName) {
   const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
   const creator = videoData.snippet.channelTitle;
   const duration = formatDuration(videoData.contentDetails.duration);
-  const viewCount = videoData.statistics.viewCount;  // Get view count from statistics
+  const viewCount = videoData.statistics.viewCount;
   const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
   // Create video card
@@ -128,14 +128,17 @@ async function addVideoFromLink(link, chatterName) {
   videoCard.classList.add('video-card');
   videoCard.setAttribute('data-chatter', chatterName); // Set the chatter's name in a data attribute
 
-  // Add chat name bubble
+  // Add the Twitch chat name as a bubble
   const chatNameBubble = `<div class="chatter-box">${chatterName}</div>`;
 
+  // Video card structure with chat bubble inside the thumbnail container
   videoCard.innerHTML = `
-    ${chatNameBubble}
-    <a href="${videoUrl}" target="_blank">
-      <img src="${thumbnailUrl}" alt="${title}">
-    </a>
+    <div class="thumbnail-container">
+      ${chatNameBubble}
+      <a href="${videoUrl}" target="_blank">
+        <img src="${thumbnailUrl}" alt="${title}">
+      </a>
+    </div>
     <div class="video-info">
       <h3>${title}</h3>
       <p class="creator"><b> ${creator}</p>
@@ -143,8 +146,6 @@ async function addVideoFromLink(link, chatterName) {
       <p class="views"> ${viewCount.toLocaleString()} views</b></p>
     </div>
   `;
-
-  console.log('Adding video card to the grid:', title);
 
   // Add to grid
   const videoGrid = document.getElementById('videoGrid');
