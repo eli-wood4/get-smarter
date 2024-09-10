@@ -127,10 +127,10 @@ body {
   position: absolute;
   top: 10px; /* Adjusts the bubble's position from the top */
   right: 10px; /* Positions the bubble on the right */
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent background */
   color: #fff; /* White text color */
   padding: 5px 10px; /* Padding inside the bubble */
-  font-size: 14px; /* Font size for the chatter's name */
+  font-size: 18px; /* Font size for the chatter's name */
   border-radius: 5px; /* Rounded corners for the box */
   z-index: 2; /* Ensure it stays above the image */
   pointer-events: none; /* Prevent interference with clicks */
