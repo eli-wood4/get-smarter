@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const twitchUsername = 'elibeelii'; // Replace with your Twitch username
-  const twitchChannel = 'atrioc'; // Replace with your Twitch channel
+  const twitchChannel = 'elibeelii'; // Replace with your Twitch channel
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';
   const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E';
   
