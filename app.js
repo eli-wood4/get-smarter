@@ -100,54 +100,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Add video to the grid using a YouTube link
-  async function addVideoFromLink(link, chatterName) {
-    const videoId = getVideoId(link);
-    
-    if (!videoId) {
-      console.error('Invalid YouTube link:', link);
-      return;
-    }
-
-    const videoData = await fetchVideoData(videoId);
-    
-    if (!videoData) {
-      console.error('Failed to fetch video data:', link);
-      return;
-    }
-
-    const title = videoData.snippet.title;
-    const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
-    const creator = videoData.snippet.channelTitle;
-    const duration = formatDuration(videoData.contentDetails.duration);
-    const viewCount = videoData.statistics.viewCount;  // Get view count from statistics
-    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
-    // Create video card
-    const videoCard = document.createElement('div');
-    videoCard.classList.add('video-card');
-    videoCard.setAttribute('data-chatter', chatterName); // Set the chatter's name in a data attribute
-
-    videoCard.innerHTML = `
-      <a href="${videoUrl}" target="_blank">
-        <img src="${thumbnailUrl}" alt="${title}">
-      </a>
-      <div class="video-info">
-        <h3>${title}</h3>
-        <p class="creator"><b> ${creator}</p>
-        <p class="length"> ${duration}</p>
-        <p class="views"> ${viewCount.toLocaleString()} views</b></p>
-      </div>
-    `;
-
-    console.log('Adding video card to the grid:', title);
-
-    // Add to grid
-    const videoGrid = document.getElementById('videoGrid');
-    if (videoGrid) {
-      videoGrid.appendChild(videoCard);
-    } else {
-      console.error('Video grid element not found');
-    }
+// Add video to the grid using a YouTube link
+async function addVideoFromLink(link, chatterName) {
+  const videoId = getVideoId(link);
+  
+  if (!videoId) {
+    console.error('Invalid YouTube link:', link);
+    return;
   }
+
+  const videoData = await fetchVideoData(videoId);
+  
+  if (!videoData) {
+    console.error('Failed to fetch video data:', link);
+    return;
+  }
+
+  const title = videoData.snippet.title;
+  const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
+  const creator = videoData.snippet.channelTitle;
+  const duration = formatDuration(videoData.contentDetails.duration);
+  const viewCount = videoData.statistics.viewCount;  // Get view count from statistics
+  const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+  // Create video card
+  const videoCard = document.createElement('div');
+  videoCard.classList.add('video-card');
+  videoCard.setAttribute('data-chatter', chatterName); // Set the chatter's name in a data attribute
+
+  // Add chat name bubble
+  const chatNameBubble = `<div class="chatter-box">${chatterName}</div>`;
+
+  videoCard.innerHTML = `
+    ${chatNameBubble}
+    <a href="${videoUrl}" target="_blank">
+      <img src="${thumbnailUrl}" alt="${title}">
+    </a>
+    <div class="video-info">
+      <h3>${title}</h3>
+      <p class="creator"><b> ${creator}</p>
+      <p class="length"> ${duration}</p>
+      <p class="views"> ${viewCount.toLocaleString()} views</b></p>
+    </div>
+  `;
+
+  console.log('Adding video card to the grid:', title);
+
+  // Add to grid
+  const videoGrid = document.getElementById('videoGrid');
+  if (videoGrid) {
+    videoGrid.appendChild(videoCard);
+  } else {
+    console.error('Video grid element not found');
+  }
+}
 });
