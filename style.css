@@ -119,7 +119,18 @@ body {
   flex-direction: column; /* Stack image and info vertically */
   height: 400px; /* Adjust height as necessary */
 }
-
+.video-card .chatter-box {
+  position: absolute;
+  top: -25px; /* Adjust position above the image */
+  left: 10px; /* Adjust horizontal position */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  color: #fff; /* White text color */
+  padding: 4px 8px; /* Add some padding */
+  font-size: 14px; /* Font size for the chatter's name */
+  border-radius: 5px; /* Rounded corners for the box */
+  z-index: 1; /* Ensure it stays above the image */
+  pointer-events: none; /* Prevent it from interfering with user clicks */
+}
 .video-card img {
   width: 100%;    /* Image fills the width of its container */
   height: 275px;  /* Adjust the height for the image */
