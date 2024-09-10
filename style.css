@@ -97,7 +97,7 @@ body {
 
 #videoGrid {
   margin-left: 350px; /* Offset to make space for the wider fixed sidebar */
-  width: calc(100vw - 350px); /* Adjust width to fit the remaining viewport */
+  width: calc(100vw - 700px); /* Adjust width to fit the remaining viewport */
   display: grid;
   grid-template-columns: repeat(4, minmax(325px, 1fr)); /* Adjust column size */
   gap: 16px; /* Space between grid items */
