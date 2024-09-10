@@ -33,8 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const splitMessage = message.data.split(' :');
       if (splitMessage.length >= 2) {
         const chatMessage = splitMessage[1].trim();
+        const chatterName = message.data.split('!')[0].substring(1); // Extract chatter's name
         console.log('Chat message:', chatMessage);
-        displayChatMessage(chatMessage);
+        displayChatMessage(chatMessage, chatterName); // Pass chatter name
       }
     }
   };
@@ -86,21 +87,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Display chat message and process YouTube links
-  function displayChatMessage(message) {
+  function displayChatMessage(message, chatterName) {
     const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
     const youtubeLinkMatch = message.match(youtubeLinkRegex);
     
     if (youtubeLinkMatch) {
       const youtubeLink = youtubeLinkMatch[0];
       console.log('YouTube link found in message:', youtubeLink);
-      addVideoFromLink(youtubeLink);
+      addVideoFromLink(youtubeLink, chatterName); // Pass chatter name
     } else {
       console.log('No YouTube link found in message:', message);
     }
   }
 
   // Add video to the grid using a YouTube link
-  async function addVideoFromLink(link) {
+  async function addVideoFromLink(link, chatterName) {
     const videoId = getVideoId(link);
     
     if (!videoId) {
@@ -125,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create video card
     const videoCard = document.createElement('div');
     videoCard.classList.add('video-card');
+    videoCard.setAttribute('data-chatter', chatterName); // Set the chatter's name in a data attribute
 
     videoCard.innerHTML = `
       <a href="${videoUrl}" target="_blank">
