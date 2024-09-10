@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const correctPassword = 'atriocc'; // Password to protect the content
+
+  // Prompt the user for the password
+  const userPassword = prompt('Secret sauce:');
+
+  // Check if the entered password is correct
+  if (userPassword !== correctPassword) {
+    alert('try again pls.');
+    document.body.innerHTML = '<h1>You\'re not my coffee cow >:(</h1>'; 
+    return; 
+  }
+
   const twitchUsername = 'elibeelii';
   const twitchChannel = 'atrioc';
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';
