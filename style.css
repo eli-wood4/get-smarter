@@ -120,6 +120,9 @@ body {
 }
 .thumbnail-container {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
 }
 
 .video-card .chatter-box {
