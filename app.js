@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';
   const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E';
 
-  const postedVideos = {}; // Object to track posted videos
+  const postedVideos = {};
 
   const ws = new WebSocket('wss://irc-ws.chat.twitch.tv/');
 
@@ -104,12 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (postedVideos[videoId]) {
-      // Video has already been posted, increment the counter
       postedVideos[videoId].count++;
       const existingCard = document.querySelector(`.video-card[data-video-id="${videoId}"]`);
       if (existingCard) {
         const chatterBox = existingCard.querySelector('.chatter-box');
-        chatterBox.innerHTML = `${chatterName} (${postedVideos[videoId].count}x)`;
+        chatterBox.innerHTML = `${chatterName} (x${postedVideos[videoId].count})`;
       }
       return;
     }
@@ -121,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // First time posting the video
     postedVideos[videoId] = { count: 1 };
 
     const title = videoData.snippet.title;
