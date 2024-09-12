@@ -156,19 +156,19 @@ function formatDuration(duration) {
     const chatNameBubble = `<div class="chatter-box">${chatterName} (${postedVideos[videoId].count}x)</div>`;
 
     videoCard.innerHTML = `
-      <div class="thumbnail-container">
-        ${chatNameBubble}
-        <a href="${videoUrl}" target="_blank">
-          <img src="${thumbnailUrl}" alt="${title}">
-        </a>
-      </div>
-      <div class="video-info">
-        <h3>${title}</h3>
-        <p class="creator"><b> ${creator}</p>
-        <p class="length"> ${duration}</p>
-        <p class="views"> ${viewCount.toLocaleString()} views</b></p>
-      </div>
-    `;
+  <div class="thumbnail-container">
+    ${chatNameBubble}
+    <a href="${videoUrl}" target="_blank">
+      <img src="${thumbnailUrl}" alt="${title}">
+    </a>
+  </div>
+  <div class="video-info">
+    <h3>${title}</h3>
+    <p class="creator"><b>${creator}</p>
+    <p class="length">${duration}</p>
+    <p class="views">${Number(viewCount).toLocaleString()} views</b></p>
+  </div>
+`;
 
     const videoGrid = document.getElementById('videoGrid');
     if (videoGrid) {
