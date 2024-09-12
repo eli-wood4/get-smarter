@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleButton.textContent = '🌙';  // Set the button text to moon icon for dark mode
     }
   });
-});
+
   const twitchUsername = 'elibeelii';
   const twitchChannel = 'elibeelii';
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';
@@ -86,31 +86,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-function formatDuration(duration) {
-  const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-  const hours = (match[1] || '').replace('H', '');
-  const minutes = (match[2] || '').replace('M', '');
-  const seconds = (match[3] || '').replace('S', '');
+  function formatDuration(duration) {
+    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    const hours = (match[1] || '').replace('H', '');
+    const minutes = (match[2] || '').replace('M', '');
+    const seconds = (match[3] || '').replace('S', '');
 
-  let formattedTime = '';
+    let formattedTime = '';
 
-  // Only show hours if they exist
-  if (hours) {
-    formattedTime += `${hours} hrs `;
+    // Only show hours if they exist
+    if (hours) {
+      formattedTime += `${hours} hrs `;
+    }
+
+    // Show minutes if they exist
+    if (minutes) {
+      formattedTime += `${minutes} mins `;
+    }
+
+    // Always show seconds, even if it's zero
+    if (seconds) {
+      formattedTime += `${seconds} secs`;
+    }
+
+    return formattedTime.trim();  // Remove any trailing space
   }
-
-  // Show minutes if they exist
-  if (minutes) {
-    formattedTime += `${minutes} mins `;
-  }
-
-  // Always show seconds, even if it's zero
-  if (seconds) {
-    formattedTime += `${seconds} secs`;
-  }
-
-  return formattedTime.trim();  // Remove any trailing space
-}
 
   function displayChatMessage(message, chatterName) {
     const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
@@ -167,19 +167,19 @@ function formatDuration(duration) {
     const chatNameBubble = `<div class="chatter-box">${chatterName} (${postedVideos[videoId].count}x)</div>`;
 
     videoCard.innerHTML = `
-  <div class="thumbnail-container">
-    ${chatNameBubble}
-    <a href="${videoUrl}" target="_blank">
-      <img src="${thumbnailUrl}" alt="${title}">
-    </a>
-  </div>
-  <div class="video-info">
-    <h3>${title}</h3>
-    <p class="creator"><b>${creator}</p>
-    <p class="length">${duration}</p>
-    <p class="views">${Number(viewCount).toLocaleString()} views</b></p>
-  </div>
-`;
+      <div class="thumbnail-container">
+        ${chatNameBubble}
+        <a href="${videoUrl}" target="_blank">
+          <img src="${thumbnailUrl}" alt="${title}">
+        </a>
+      </div>
+      <div class="video-info">
+        <h3>${title}</h3>
+        <p class="creator"><b>${creator}</b></p>
+        <p class="length">${duration}</p>
+        <p class="views">${Number(viewCount).toLocaleString()} views</p>
+      </div>
+    `;
 
     const videoGrid = document.getElementById('videoGrid');
     if (videoGrid) {
