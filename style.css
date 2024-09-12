@@ -1,4 +1,4 @@
-/* General Body Styles */
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -8,7 +8,6 @@ body {
   overflow: hidden;
 }
 
-/* Sidebar Styles */
 .sidebar2 {
   position: fixed;
   top: 0;
@@ -29,7 +28,7 @@ body {
 .sidebar2 h1 {
   writing-mode: vertical-rl;
   font-size: 150px;
-  color: #b0b0b0; /* Light grey for smiley face */
+  color: #1b331b;
   text-align: center;
   margin: 0;
   position: absolute;
@@ -39,13 +38,12 @@ body {
 
 .sidebar2 h2 {
   font-size: 15px; 
-  color: #808080; /* Medium grey for Twitter handle */
+  color: #1b331b;
   text-align: center;
   margin: 0;
   position: absolute;
   bottom: 0;
 }
-
 .sidebar {
   position: fixed;
   top: 0;
@@ -63,23 +61,39 @@ body {
   overflow: hidden;
 }
 
-.sidebar h1, .sidebar h2, .sidebar h3 {
-  color: #808080; /* Medium grey for all headers */
-}
-
 .sidebar h1 {
-  color: #404040; /* Darker grey for h1 */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 52px; 
+  color: #1b331b;
+  text-align: center;
+  margin: 0;
+  line-height: 1.1;
+  opacity: 0.8;
 }
 
 .sidebar h2 {
-  color: #666666; /* Slightly lighter grey for h2 */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 52px; 
+  color: #60b360;
+  text-align: center;
+  margin: 0;
+  line-height: 1.1; 
+  opacity: 0.8; 
 }
 
 .sidebar h3 {
-  color: #999999; /* Light grey for h3 */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 52px; 
+  color: #60b360;
+  text-align: center;
+  margin: 0;
+  line-height: 1.1;
+  opacity: 0.3; 
 }
 
-/* Grid and Video Card Styles */
 #videoGrid {
   margin-left: 350px; 
   width: calc(100vw - 700px);
@@ -104,7 +118,6 @@ body {
   flex-direction: column; 
   height: 400px; 
 }
-
 .thumbnail-container {
   position: relative;
   display: flex;
@@ -133,6 +146,7 @@ body {
   display: block;
   margin: 0 auto; 
 }
+
 
 .video-card .video-info {
   padding: 8px;
@@ -172,6 +186,7 @@ body {
   transform: scale(1.01);
 }
 
+
 /* Dark Mode Styles */
 .dark-mode {
   background-color: #121212;
@@ -185,12 +200,15 @@ body {
 
 .dark-mode .sidebar, .dark-mode .sidebar2 {
   background-color: #333;
-  color: #ffffff;
+  color: #808080;
 }
-
 .dark-mode .video-card .chatter-box {
   background-color: rgba(255, 255, 255, 0.8);
   color: #000;
+}
+
+body {
+  background-color: #ffffE4;
 }
 
 .dark-mode-toggle {
@@ -204,7 +222,7 @@ body {
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 2000; /* Ensure it is above other elements */
+  z-index: 2000; 
 }
 
 .dark-mode-toggle:hover {
