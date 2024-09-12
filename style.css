@@ -237,7 +237,7 @@ body {
 .dark-mode .sidebar2 h1 {
   writing-mode: vertical-rl;
   font-size: 150px;
-  color: #3A3B3C;
+  color: #E4E6EB;
   text-align: center;
   margin: 0;
   position: absolute;
@@ -247,7 +247,7 @@ body {
 
 .dark-mode .sidebar2 h2 {
   font-size: 15px; 
-  color: #3A3B3C;
+  color: #E4E6EB;
   text-align: center;
   margin: 0;
   position: absolute;
