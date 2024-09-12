@@ -2,12 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleButton = document.getElementById('darkModeToggle');
 
   toggleButton.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');  // Toggles the dark-mode class on the body
-
+    document.body.classList.toggle('dark-mode');  
     if (document.body.classList.contains('dark-mode')) {
-      toggleButton.textContent = '☀️';  // Set the button text to sun icon for light mode
+      toggleButton.textContent = '☀️'; 
     } else {
-      toggleButton.textContent = '🌙';  // Set the button text to moon icon for dark mode
+      toggleButton.textContent = '🌙'; 
     }
   });
 
@@ -94,22 +93,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let formattedTime = '';
 
-    // Only show hours if they exist
     if (hours) {
       formattedTime += `${hours} hrs `;
     }
 
-    // Show minutes if they exist
     if (minutes) {
       formattedTime += `${minutes} mins `;
     }
 
-    // Always show seconds, even if it's zero
     if (seconds) {
       formattedTime += `${seconds} secs`;
     }
 
-    return formattedTime.trim();  // Remove any trailing space
+    return formattedTime.trim(); 
   }
 
   function displayChatMessage(message, chatterName) {
@@ -162,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create video card
     const videoCard = document.createElement('div');
     videoCard.classList.add('video-card');
-    videoCard.setAttribute('data-video-id', videoId); // Store the video ID
+    videoCard.setAttribute('data-video-id', videoId);
 
     const chatNameBubble = `<div class="chatter-box">${chatterName} (${postedVideos[videoId].count}x)</div>`;
 
