@@ -1,5 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const toggleButton = document.getElementById('darkModeToggle');
 
+  toggleButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+
+    if (document.body.classList.contains('dark-mode')) {
+      toggleButton.textContent = '☀️';
+    } else {
+      toggleButton.textContent = '🌙';
+    }
+  });
+});
   const twitchUsername = 'elibeelii';
   const twitchChannel = 'elibeelii';
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';
