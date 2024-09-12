@@ -185,3 +185,53 @@ body {
 .video-card:hover {
   transform: scale(1.01);
 }
+
+
+/* Dark Mode Styles */
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .video-card {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+}
+
+.dark-mode .sidebar, .dark-mode .sidebar2 {
+  background-color: #333;
+  color: #ffffff;
+}
+
+.dark-mode .video-card .chatter-box {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+
+body {
+  background-color: #ffffE4;
+}
+
+.dark-mode-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #f0f0f0;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 2000; 
+}
+
+.dark-mode-toggle:hover {
+  background-color: #e0e0e0;
+}
+
+.dark-mode .dark-mode-toggle {
+  background-color: #333;
+  color: #ffffff;
+}
+
