@@ -75,13 +75,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function formatDuration(duration) {
-    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    const hours = (match[1] || '').replace('H', '');
-    const minutes = (match[2] || '').replace('M', '');
-    const seconds = (match[3] || '').replace('S', '');
-    return [hours || '00', minutes || '00', seconds || '00'].join(':');
+function formatDuration(duration) {
+  const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+  const hours = (match[1] || '').replace('H', '');
+  const minutes = (match[2] || '').replace('M', '');
+  const seconds = (match[3] || '').replace('S', '');
+
+  let formattedTime = '';
+
+  // Only show hours if they exist
+  if (hours) {
+    formattedTime += `${hours} hrs `;
   }
+
+  // Show minutes if they exist
+  if (minutes) {
+    formattedTime += `${minutes} mins `;
+  }
+
+  // Always show seconds, even if it's zero
+  if (seconds) {
+    formattedTime += `${seconds} secs`;
+  }
+
+  return formattedTime.trim();  // Remove any trailing space
+}
 
   function displayChatMessage(message, chatterName) {
     const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
