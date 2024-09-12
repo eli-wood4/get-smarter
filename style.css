@@ -206,7 +206,7 @@ body {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: 52px; 
-  color: #333;
+  color: #E4E6EB;
   text-align: center;
   margin: 0;
   line-height: 1.1;
@@ -217,7 +217,7 @@ body {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: 52px; 
-  color: #333;
+  color: #3A3B3C;
   text-align: center;
   margin: 0;
   line-height: 1.1; 
@@ -228,11 +228,30 @@ body {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: 52px; 
-  color: #333;
+  color: #3A3B3C;
   text-align: center;
   margin: 0;
   line-height: 1.1;
   opacity: 0.3; 
+}
+.dark-mode .sidebar2 h1 {
+  writing-mode: vertical-rl;
+  font-size: 150px;
+  color: #3A3B3C;
+  text-align: center;
+  margin: 0;
+  position: absolute;
+  left: 30%;
+  bottom: 35px; 
+}
+
+.dark-mode .sidebar2 h2 {
+  font-size: 15px; 
+  color: #3A3B3C;
+  text-align: center;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
 }
 .dark-mode .video-card .chatter-box {
   background-color: rgba(255, 255, 255, 0.8);
