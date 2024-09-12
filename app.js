@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleButton = document.getElementById('darkModeToggle');
 
   toggleButton.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('dark-mode');  // Toggles the dark-mode class on the body
 
     if (document.body.classList.contains('dark-mode')) {
-      toggleButton.textContent = '☀️';
+      toggleButton.textContent = '☀️';  // Set the button text to sun icon for light mode
     } else {
-      toggleButton.textContent = '🌙';
+      toggleButton.textContent = '🌙';  // Set the button text to moon icon for dark mode
     }
   });
 });
