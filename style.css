@@ -202,7 +202,22 @@ body {
   background-color: #333;
   color: #808080;
 }
+.sidebar h1 {
+  color: #404040; 
 
+.sidebar h2 {
+  color: #666666;
+
+.sidebar h3 {
+  color: #999999; 
+
+.sidebar2 h1 {
+  color: #b0b0b0;
+}
+
+.sidebar2 h2 {
+  color: #808080;
+}
 .dark-mode .video-card .chatter-box {
   background-color: rgba(255, 255, 255, 0.8);
   color: #000;
