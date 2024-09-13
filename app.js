@@ -121,67 +121,74 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  async function addVideoFromLink(link, chatterName) {
-    const videoId = getVideoId(link);
-    
-    if (!videoId) {
-      console.error('Invalid YouTube link:', link);
-      return;
-    }
-
-    if (postedVideos[videoId]) {
-      postedVideos[videoId].count++;
-      const existingCard = document.querySelector(`.video-card[data-video-id="${videoId}"]`);
-      if (existingCard) {
-        const chatterBox = existingCard.querySelector('.chatter-box');
-        chatterBox.innerHTML = `${chatterName} (x${postedVideos[videoId].count})`;
-      }
-      return;
-    }
-
-    const videoData = await fetchVideoData(videoId);
-    
-    if (!videoData) {
-      console.error('Failed to fetch video data:', link);
-      return;
-    }
-
-    postedVideos[videoId] = { count: 1 };
-
-    const title = videoData.snippet.title;
-    const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
-    const creator = videoData.snippet.channelTitle;
-    const duration = formatDuration(videoData.contentDetails.duration);
-    const viewCount = videoData.statistics.viewCount;
-    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
-    // Create video card
-    const videoCard = document.createElement('div');
-    videoCard.classList.add('video-card');
-    videoCard.setAttribute('data-video-id', videoId);
-
-    const chatNameBubble = `<div class="chatter-box">${chatterName} (${postedVideos[videoId].count}x)</div>`;
-
-    videoCard.innerHTML = `
-      <div class="thumbnail-container">
-        ${chatNameBubble}
-        <a href="${videoUrl}" target="_blank">
-          <img src="${thumbnailUrl}" alt="${title}">
-        </a>
-      </div>
-      <div class="video-info">
-        <h3>${title}</h3>
-        <p class="creator"><b>${creator}</b></p>
-        <p class="length">${duration}</p>
-        <p class="views">${Number(viewCount).toLocaleString()} views</p>
-      </div>
-    `;
-
-    const videoGrid = document.getElementById('videoGrid');
-    if (videoGrid) {
-      videoGrid.appendChild(videoCard);
-    } else {
-      console.error('Video grid element not found');
-    }
+async function addVideoFromLink(link, chatterName) {
+  const videoId = getVideoId(link);
+  
+  if (!videoId) {
+    console.error('Invalid YouTube link:', link);
+    return;
   }
+
+  if (postedVideos[videoId]) {
+    postedVideos[videoId].count++;
+
+    const existingCard = document.querySelector(`.video-card[data-video-id="${videoId}"]`);
+    if (existingCard) {
+      const chatterBox = existingCard.querySelector('.chatter-box');
+
+      if (!chatterBox.innerHTML.includes(chatterName)) {
+        chatterBox.innerHTML += `, ${chatterName}`;
+      }
+
+      chatterBox.innerHTML += ` (x${postedVideos[videoId].count})`;
+    }
+    return;
+  }
+
+  const videoData = await fetchVideoData(videoId);
+  
+  if (!videoData) {
+    console.error('Failed to fetch video data:', link);
+    return;
+  }
+
+  postedVideos[videoId] = { count: 1 };
+
+  const title = videoData.snippet.title;
+  const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
+  const creator = videoData.snippet.channelTitle;
+  const duration = formatDuration(videoData.contentDetails.duration);
+  const viewCount = videoData.statistics.viewCount;
+  const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+  // Create video card
+  const videoCard = document.createElement('div');
+  videoCard.classList.add('video-card');
+  videoCard.setAttribute('data-video-id', videoId);
+
+  const chatNameBubble = `<div class="chatter-box">${chatterName} (x${postedVideos[videoId].count})</div>`;
+
+  videoCard.innerHTML = `
+    <div class="thumbnail-container">
+      ${chatNameBubble}
+      <a href="${videoUrl}" target="_blank">
+        <img src="${thumbnailUrl}" alt="${title}">
+      </a>
+    </div>
+    <div class="video-info">
+      <h3>${title}</h3>
+      <p class="creator"><b>${creator}</b></p>
+      <p class="length">${duration}</p>
+      <p class="views">${Number(viewCount).toLocaleString()} views</p>
+    </div>
+  `;
+
+  const videoGrid = document.getElementById('videoGrid');
+  if (videoGrid) {
+    videoGrid.appendChild(videoCard);
+  } else {
+    console.error('Video grid element not found');
+  }
+}
+
 });
