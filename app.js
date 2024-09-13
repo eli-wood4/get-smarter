@@ -140,7 +140,7 @@ async function addVideoFromLink(link, chatterName) {
         chatterBox.innerHTML += `, ${chatterName}`;
       }
 
-      chatterBox.innerHTML += ` (x${postedVideos[videoId].count})`;
+      chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(x\d+\)/, `(x${postedVideos[videoId].count})`);
     }
     return;
   }
@@ -190,5 +190,6 @@ async function addVideoFromLink(link, chatterName) {
     console.error('Video grid element not found');
   }
 }
+
 
 });
