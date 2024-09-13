@@ -129,20 +129,21 @@ async function addVideoFromLink(link, chatterName) {
     return;
   }
 
+  // Check if the video is already posted.
   if (postedVideos[videoId]) {
-    postedVideos[videoId].count++;
+    // Check if this chatter has already posted this video.
+    if (!postedVideos[videoId].chatters.includes(chatterName)) {
+      postedVideos[videoId].count++; // Increment only for new chatters.
+      postedVideos[videoId].chatters.push(chatterName); // Add the new chatter.
 
-    const existingCard = document.querySelector(`.video-card[data-video-id="${videoId}"]`);
-    if (existingCard) {
-      const chatterBox = existingCard.querySelector('.chatter-box');
-
-      if (!chatterBox.innerHTML.includes(chatterName)) {
-        chatterBox.innerHTML += `, ${chatterName}`;
+      // Update the counter in the existing card without changing the chatter's name.
+      const existingCard = document.querySelector(`.video-card[data-video-id="${videoId}"]`);
+      if (existingCard) {
+        const chatterBox = existingCard.querySelector('.chatter-box');
+        chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(x\d+\)/, `(x${postedVideos[videoId].count})`);
       }
-
-      chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(x\d+\)/, `(x${postedVideos[videoId].count})`);
     }
-    return;
+    return; // Don't append new chatter's name, only count unique chatters.
   }
 
   const videoData = await fetchVideoData(videoId);
@@ -152,7 +153,8 @@ async function addVideoFromLink(link, chatterName) {
     return;
   }
 
-  postedVideos[videoId] = { count: 1 };
+  // Initialize video entry with the first chatter and count.
+  postedVideos[videoId] = { count: 1, chatters: [chatterName] };
 
   const title = videoData.snippet.title;
   const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
@@ -190,6 +192,4 @@ async function addVideoFromLink(link, chatterName) {
     console.error('Video grid element not found');
   }
 }
-
-
 });
