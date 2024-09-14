@@ -1,14 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
   const toggleButton = document.getElementById('darkModeToggle');
+  const mainHeading = document.querySelector('.sidebar h1'); 
 
   toggleButton.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');  
     if (document.body.classList.contains('dark-mode')) {
       toggleButton.textContent = '☀️'; 
+      mainHeading.textContent = '🌭GET SMARTER SATURDAYS🌭'; 
     } else {
       toggleButton.textContent = '🌙'; 
+      mainHeading.textContent = '🐝GET SMARTER SATURDAYS🐝';
     }
   });
+  
 
   const twitchUsername = 'elibeelii';
   const twitchChannel = 'atrioc';
