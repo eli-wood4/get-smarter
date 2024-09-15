@@ -172,7 +172,7 @@ async function addVideoFromLink(link, chatterName) {
   videoCard.classList.add('video-card');
   videoCard.setAttribute('data-video-id', videoId);
 
-  const chatNameBubble = `<div class="chatter-box">${chatterName} (x${postedVideos[videoId].count})</div>`;
+  const chatNameBubble = `<div class="chatter-box">${chatterName} (+${postedVideos[videoId].count})</div>`;
 
   videoCard.innerHTML = `
     <div class="thumbnail-container">
