@@ -76,6 +76,55 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
+  async function fetchVideoData(videoId) {
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${youtubeApiKey}`;
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+      const data = await response.json();
+      return data.items && data.items.length > 0 ? data.items[0] : null;
+    } catch (error) {
+      console.error('Error fetching video data:', error);
+      return null;
+    }
+  }
+
+  function formatDuration(duration) {
+    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    const hours = (match[1] || '').replace('H', '');
+    const minutes = (match[2] || '').replace('M', '');
+    const seconds = (match[3] || '').replace('S', '');
+
+    let formattedTime = '';
+
+    if (hours) {
+      formattedTime += `${hours} hrs `;
+    }
+
+    if (minutes) {
+      formattedTime += `${minutes} mins `;
+    }
+
+    if (seconds) {
+      formattedTime += `${seconds} secs`;
+    }
+
+    return formattedTime.trim(); 
+  }
+
+  function displayChatMessage(message, chatterName) {
+    const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
+    const youtubeLinkMatch = message.match(youtubeLinkRegex);
+    
+    if (youtubeLinkMatch) {
+      const youtubeLink = youtubeLinkMatch[0];
+      console.log('YouTube link found in message:', youtubeLink);
+      addVideoFromLink(youtubeLink, chatterName); 
+    } else {
+      console.log('No YouTube link found in message:', message);
+    }
+  }
+
 async function addVideoFromLink(link, chatterName) {
   const videoId = getVideoId(link);
   
@@ -123,7 +172,7 @@ async function addVideoFromLink(link, chatterName) {
   videoCard.classList.add('video-card');
   videoCard.setAttribute('data-video-id', videoId);
 
-  const chatNameBubble = `<div class="chatter-box">${chatterName} (+${postedVideos[videoId].count})</div>`;
+  const chatNameBubble = `<div class="chatter-box">${chatterName} (x${postedVideos[videoId].count})</div>`;
 
   videoCard.innerHTML = `
     <div class="thumbnail-container">
