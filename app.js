@@ -144,7 +144,7 @@ async function addVideoFromLink(link, chatterName) {
       const existingCard = document.querySelector(`.video-card[data-video-id="${videoId}"]`);
       if (existingCard) {
         const chatterBox = existingCard.querySelector('.chatter-box');
-        chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(x\d+\)/, `(x${postedVideos[videoId].count})`);
+        chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(x\d+\)/, `(+${postedVideos[videoId].count})`);
       }
     }
     return; // Don't append new chatter's name, only count unique chatters.
