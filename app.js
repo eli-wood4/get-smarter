@@ -133,21 +133,18 @@ async function addVideoFromLink(link, chatterName) {
     return;
   }
 
-  // Check if the video is already posted.
   if (postedVideos[videoId]) {
-    // Check if this chatter has already posted this video.
     if (!postedVideos[videoId].chatters.includes(chatterName)) {
-      postedVideos[videoId].count++; // Increment only for new chatters.
-      postedVideos[videoId].chatters.push(chatterName); // Add the new chatter.
+      postedVideos[videoId].count++;
+      postedVideos[videoId].chatters.push(chatterName); 
 
-      // Update the counter in the existing card without changing the chatter's name.
       const existingCard = document.querySelector(`.video-card[data-video-id="${videoId}"]`);
       if (existingCard) {
         const chatterBox = existingCard.querySelector('.chatter-box');
-        chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(x\d+\)/, `(+${postedVideos[videoId].count})`);
+       chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(\+\d+\)/, `(+${postedVideos[videoId].count})`);
       }
     }
-    return; // Don't append new chatter's name, only count unique chatters.
+    return; 
   }
 
   const videoData = await fetchVideoData(videoId);
@@ -172,7 +169,7 @@ async function addVideoFromLink(link, chatterName) {
   videoCard.classList.add('video-card');
   videoCard.setAttribute('data-video-id', videoId);
 
-  const chatNameBubble = `<div class="chatter-box">${chatterName} (x${postedVideos[videoId].count})</div>`;
+  const chatNameBubble = `<div class="chatter-box">${chatterName} (+${postedVideos[videoId].count})</div>`;
 
   videoCard.innerHTML = `
     <div class="thumbnail-container">
