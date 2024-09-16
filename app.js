@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.toggle('dark-mode');  
     if (document.body.classList.contains('dark-mode')) {
       toggleButton.textContent = '☀️'; 
-      mainHeading.textContent = '🌭GET SMARTER SUNDAY🌭'; 
+      mainHeading.textContent = '🌭GET SMARTER SATURDAY🌭'; 
     } else {
       toggleButton.textContent = '🌙'; 
-      mainHeading.textContent = '🐝GET SMARTER SUNDAY🐝';
+      mainHeading.textContent = '🐝GET SMARTER SATURDAY🐝';
     }
   });
   
