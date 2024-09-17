@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function batchProcessVideos() {
     if (videoIdQueue.length === 0) return;
 
-    const videoIds = [...videoIdQueue];  
-    videoIdQueue = []; 
+    const videoIds = [...videoIdQueue];  // Copy the queue
+    videoIdQueue = [];  // Clear the queue
 
     fetchBatchVideoData(videoIds).then((videos) => {
       if (videos) {
@@ -104,17 +104,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function addVideoToQueue(videoId) {
+  function addVideoToQueue(videoId, chatterName) {
+    // Initialize postedVideos[videoId] if it doesn't exist
     if (!postedVideos[videoId]) {
-      postedVideos[videoId] = { count: 1, chatters: [] };
+      postedVideos[videoId] = { count: 1, chatters: [chatterName] };
       videoIdQueue.push(videoId);
+    } else if (!postedVideos[videoId].chatters.includes(chatterName)) {
+      postedVideos[videoId].chatters.push(chatterName);
+      postedVideos[videoId].count++;
+    }
 
-      if (!batchTimeout) {
-        batchTimeout = setTimeout(() => {
-          batchProcessVideos();
-          batchTimeout = null;  
-        }, 10000);  
-      }
+    if (!batchTimeout) {
+      batchTimeout = setTimeout(() => {
+        batchProcessVideos();
+        batchTimeout = null;  // Reset the timeout
+      }, 1000);  // Batch every 1 second
     }
   }
 
@@ -126,9 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const youtubeLink = youtubeLinkMatch[0];
       console.log('YouTube link found in message:', youtubeLink);
       const videoId = getVideoId(youtubeLink);
-      if (videoId && !postedVideos[videoId].chatters.includes(chatterName)) {
-        postedVideos[videoId].chatters.push(chatterName);
-        addVideoToQueue(videoId);
+      if (videoId) {
+        addVideoToQueue(videoId, chatterName);
       }
     } else {
       console.log('No YouTube link found in message:', message);
