@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const twitchUsername = 'elibeelii';
-  const twitchChannel = 'elibeelii';
+  const twitchChannel = 'atrioc';
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';
   const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E';
   const postedVideos = {};
@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function batchProcessVideos() {
     if (videoIdQueue.length === 0) return;
 
-    const videoIds = [...videoIdQueue];  // Copy the queue
-    videoIdQueue = [];  // Clear the queue
+    const videoIds = [...videoIdQueue];  
+    videoIdQueue = []; 
 
     fetchBatchVideoData(videoIds).then((videos) => {
       if (videos) {
@@ -105,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function addVideoToQueue(videoId, chatterName) {
-    // Initialize postedVideos[videoId] if it doesn't exist
     if (!postedVideos[videoId]) {
       postedVideos[videoId] = { count: 1, chatters: [chatterName] };
       videoIdQueue.push(videoId);
@@ -118,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
       batchTimeout = setTimeout(() => {
         batchProcessVideos();
         batchTimeout = null; 
-      }, 10000); 
+      }, 1000); 
     }
   }
 
