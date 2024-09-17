@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('No YouTube link found in message:', message);
     }
   }
-
 async function addVideoFromLink(link, chatterName) {
   const videoId = getVideoId(link);
   
@@ -133,6 +132,7 @@ async function addVideoFromLink(link, chatterName) {
     return;
   }
 
+  // Check if the video has already been posted to avoid duplicate API calls
   if (postedVideos[videoId]) {
     if (!postedVideos[videoId].chatters.includes(chatterName)) {
       postedVideos[videoId].count++;
@@ -141,12 +141,13 @@ async function addVideoFromLink(link, chatterName) {
       const existingCard = document.querySelector(`.video-card[data-video-id="${videoId}"]`);
       if (existingCard) {
         const chatterBox = existingCard.querySelector('.chatter-box');
-       chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(\+\d+\)/, `(+${postedVideos[videoId].count})`);
+        chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(\+\d+\)/, `(+${postedVideos[videoId].count})`);
       }
     }
     return; 
   }
 
+  // Fetch video data only if the video has not been posted before
   const videoData = await fetchVideoData(videoId);
   
   if (!videoData) {
