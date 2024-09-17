@@ -12,14 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
       mainHeading.textContent = '🐝GET SMARTER SATURDAY🐝';
     }
   });
-  
 
   const twitchUsername = 'elibeelii';
   const twitchChannel = 'elibeelii';
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';
   const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E';
-
   const postedVideos = {};
+  let videoIdQueue = [];
+  let batchTimeout = null;
 
   const ws = new WebSocket('wss://irc-ws.chat.twitch.tv/');
 
@@ -76,16 +76,100 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
-  async function fetchVideoData(videoId) {
-    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${youtubeApiKey}`;
+  async function fetchBatchVideoData(videoIds) {
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds.join(',')}&key=${youtubeApiKey}`;
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const data = await response.json();
-      return data.items && data.items.length > 0 ? data.items[0] : null;
+      return data.items && data.items.length > 0 ? data.items : null;
     } catch (error) {
       console.error('Error fetching video data:', error);
       return null;
+    }
+  }
+
+  function batchProcessVideos() {
+    if (videoIdQueue.length === 0) return;
+
+    const videoIds = [...videoIdQueue];  
+    videoIdQueue = []; 
+
+    fetchBatchVideoData(videoIds).then((videos) => {
+      if (videos) {
+        videos.forEach(videoData => {
+          addVideoCard(videoData);
+        });
+      }
+    });
+  }
+
+  function addVideoToQueue(videoId) {
+    if (!postedVideos[videoId]) {
+      postedVideos[videoId] = { count: 1, chatters: [] };
+      videoIdQueue.push(videoId);
+
+      if (!batchTimeout) {
+        batchTimeout = setTimeout(() => {
+          batchProcessVideos();
+          batchTimeout = null;  // Reset the timeout
+        }, 1000);  // Batch every 1 second
+      }
+    }
+  }
+
+  function displayChatMessage(message, chatterName) {
+    const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
+    const youtubeLinkMatch = message.match(youtubeLinkRegex);
+    
+    if (youtubeLinkMatch) {
+      const youtubeLink = youtubeLinkMatch[0];
+      console.log('YouTube link found in message:', youtubeLink);
+      const videoId = getVideoId(youtubeLink);
+      if (videoId && !postedVideos[videoId].chatters.includes(chatterName)) {
+        postedVideos[videoId].chatters.push(chatterName);
+        addVideoToQueue(videoId);
+      }
+    } else {
+      console.log('No YouTube link found in message:', message);
+    }
+  }
+
+  function addVideoCard(videoData) {
+    const videoId = videoData.id;
+    const title = videoData.snippet.title;
+    const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
+    const creator = videoData.snippet.channelTitle;
+    const duration = formatDuration(videoData.contentDetails.duration);
+    const viewCount = videoData.statistics.viewCount;
+    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+    const videoCard = document.createElement('div');
+    videoCard.classList.add('video-card');
+    videoCard.setAttribute('data-video-id', videoId);
+
+    const chatNameBubble = `<div class="chatter-box">${postedVideos[videoId].chatters[0]} (+${postedVideos[videoId].count})</div>`;
+
+    videoCard.innerHTML = `
+      <div class="thumbnail-container">
+        ${chatNameBubble}
+        <a href="${videoUrl}" target="_blank">
+          <img src="${thumbnailUrl}" alt="${title}">
+        </a>
+      </div>
+      <div class="video-info">
+        <h3>${title}</h3>
+        <p class="creator"><b>${creator}</b></p>
+        <p class="length">${duration}</p>
+        <p class="views">${Number(viewCount).toLocaleString()} views</p>
+      </div>
+    `;
+
+    const videoGrid = document.getElementById('videoGrid');
+    if (videoGrid) {
+      videoGrid.appendChild(videoCard);
+    } else {
+      console.error('Video grid element not found');
     }
   }
 
@@ -111,87 +195,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     return formattedTime.trim(); 
   }
-
-  function displayChatMessage(message, chatterName) {
-    const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
-    const youtubeLinkMatch = message.match(youtubeLinkRegex);
-    
-    if (youtubeLinkMatch) {
-      const youtubeLink = youtubeLinkMatch[0];
-      console.log('YouTube link found in message:', youtubeLink);
-      addVideoFromLink(youtubeLink, chatterName); 
-    } else {
-      console.log('No YouTube link found in message:', message);
-    }
-  }
-async function addVideoFromLink(link, chatterName) {
-  const videoId = getVideoId(link);
-  
-  if (!videoId) {
-    console.error('Invalid YouTube link:', link);
-    return;
-  }
-
-  // Check if the video has already been posted to avoid duplicate API calls
-  if (postedVideos[videoId]) {
-    if (!postedVideos[videoId].chatters.includes(chatterName)) {
-      postedVideos[videoId].count++;
-      postedVideos[videoId].chatters.push(chatterName); 
-
-      const existingCard = document.querySelector(`.video-card[data-video-id="${videoId}"]`);
-      if (existingCard) {
-        const chatterBox = existingCard.querySelector('.chatter-box');
-        chatterBox.innerHTML = chatterBox.innerHTML.replace(/\(\+\d+\)/, `(+${postedVideos[videoId].count})`);
-      }
-    }
-    return; 
-  }
-
-  // Fetch video data only if the video has not been posted before
-  const videoData = await fetchVideoData(videoId);
-  
-  if (!videoData) {
-    console.error('Failed to fetch video data:', link);
-    return;
-  }
-
-  // Initialize video entry with the first chatter and count.
-  postedVideos[videoId] = { count: 1, chatters: [chatterName] };
-
-  const title = videoData.snippet.title;
-  const thumbnailUrl = videoData.snippet.thumbnails.medium.url;
-  const creator = videoData.snippet.channelTitle;
-  const duration = formatDuration(videoData.contentDetails.duration);
-  const viewCount = videoData.statistics.viewCount;
-  const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
-  // Create video card
-  const videoCard = document.createElement('div');
-  videoCard.classList.add('video-card');
-  videoCard.setAttribute('data-video-id', videoId);
-
-  const chatNameBubble = `<div class="chatter-box">${chatterName} (+${postedVideos[videoId].count})</div>`;
-
-  videoCard.innerHTML = `
-    <div class="thumbnail-container">
-      ${chatNameBubble}
-      <a href="${videoUrl}" target="_blank">
-        <img src="${thumbnailUrl}" alt="${title}">
-      </a>
-    </div>
-    <div class="video-info">
-      <h3>${title}</h3>
-      <p class="creator"><b>${creator}</b></p>
-      <p class="length">${duration}</p>
-      <p class="views">${Number(viewCount).toLocaleString()} views</p>
-    </div>
-  `;
-
-  const videoGrid = document.getElementById('videoGrid');
-  if (videoGrid) {
-    videoGrid.appendChild(videoCard);
-  } else {
-    console.error('Video grid element not found');
-  }
-}
 });
