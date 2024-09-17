@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!batchTimeout) {
       batchTimeout = setTimeout(() => {
         batchProcessVideos();
-        batchTimeout = null;  // Reset the timeout
-      }, 1000);  // Batch every 1 second
+        batchTimeout = null; 
+      }, 10000); 
     }
   }
 
