@@ -10,12 +10,12 @@ body {
 
 /* Sidebar Common Styles */
 .sidebar, .sidebar2 {
+  width: 350px; /* Explicit width for sidebars */
+  height: 100vh;
   background-size: cover;
   background-position: center;
   position: fixed;
   top: 0;
-  width: 350px;
-  height: 100vh;
   padding: 16px;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -23,19 +23,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   color: #1b331b; /* Default text color for light mode */
 }
 
-/* Light Mode Background Images */
+/* Left Sidebar */
 .sidebar {
   left: 0;
-  background-image: url('0000.png'); /* Light mode image for left sidebar */
+  background-image: url('0000.png'); /* Light mode image */
 }
 
+/* Right Sidebar */
 .sidebar2 {
   right: 0;
-  background-image: url('0000.png'); /* Light mode image for right sidebar */
+  background-image: url('0000.png'); /* Light mode image */
 }
 
 /* Sidebar Text Styles */
@@ -43,65 +43,18 @@ body {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: 52px;
-  color: inherit; /* Inherits from parent for easier color management */
+  color: inherit;
   text-align: center;
   margin: 0;
   line-height: 1.1;
   opacity: 0.8;
 }
 
-.sidebar h2, .sidebar2 h2 {
-  font-size: 15px; 
-  color: inherit;
-  text-align: center;
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-}
-
-.sidebar h3, .sidebar2 h3 {
-  font-size: 52px;
-  color: inherit;
-  text-align: center;
-  margin: 0;
-  line-height: 1.1;
-  opacity: 0.3;
-}
-
-/* Dark Mode Styles */
-.dark-mode {
-  background-color: #121212;
-  color: #ffffff;
-}
-
-.dark-mode .sidebar, 
-.dark-mode .sidebar2 {
-  background-image: url('0001.png'); /* Dark mode image for sidebars */
-  /* Ensure fallback background color */
-  background-color: #333;
-  color: #E4E6EB;
-}
-
-.dark-mode .sidebar h1, 
-.dark-mode .sidebar2 h1 {
-  color: #E4E6EB; /* Specific text color for dark mode */
-}
-
-.dark-mode .sidebar h2, 
-.dark-mode .sidebar2 h2 {
-  color: #3A3B3C;
-}
-
-.dark-mode .sidebar h3, 
-.dark-mode .sidebar2 h3 {
-  color: #3A3B3C;
-}
-
-/* Video Grid */
+/* Main Content Area (Video Grid) */
 #videoGrid {
-  margin-left: 350px;
-  margin-right: 350px; /* To account for both sidebars */
-  width: calc(100vw - 700px);
+  margin-left: 350px; /* Account for left sidebar width */
+  margin-right: 350px; /* Account for right sidebar width */
+  width: calc(100vw - 700px); /* Total space minus both sidebars */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
@@ -112,81 +65,12 @@ body {
   position: relative;
 }
 
-.video-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  transition: transform 0.1s ease;
-  display: flex;
-  flex-direction: column;
-  height: 400px;
-}
-
-.thumbnail-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.video-card .chatter-box {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(0, 0, 0, 0.9);
-  color: #fff;
-  padding: 5px 10px;
-  font-size: 18px;
-  border-radius: 5px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.video-card img {
-  width: 100%; /* Make it responsive */
-  height: auto;
-  object-fit: cover;
-  display: block;
-}
-
-.video-card .video-info {
-  padding: 8px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.video-card h3 {
-  font-size: 20px;
-  margin: 0;
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.4;
-}
-
-.video-card .video-details {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: #696969;
-}
-
-.video-card .creator,
-.video-card .length,
-.video-card .views {
-  margin: 0;
-}
-
-.video-card .length,
-.video-card .views {
-  margin-left: 8px;
-}
-
-.video-card:hover {
-  transform: scale(1.01);
+/* Dark Mode Styles */
+.dark-mode .sidebar, 
+.dark-mode .sidebar2 {
+  background-image: url('0001.png'); /* Dark mode image */
+  background-color: #333;
+  color: #E4E6EB;
 }
 
 /* Dark Mode Video Cards */
@@ -195,9 +79,15 @@ body {
   border: 1px solid #333;
 }
 
-.dark-mode .video-card .chatter-box {
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #000;
+.video-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 400px;
 }
 
 /* Dark Mode Toggle Button */
@@ -213,10 +103,6 @@ body {
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 2000;
-}
-
-.dark-mode-toggle:hover {
-  background-color: #e0e0e0;
 }
 
 .dark-mode .dark-mode-toggle {
