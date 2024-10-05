@@ -1,25 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
   const toggleButton = document.getElementById('darkModeToggle');
   const mainHeading = document.querySelector('.sidebar h1'); 
-  const lightModeVideo = document.querySelector('.light-mode-video'); // Select light mode video
-  const darkModeVideo = document.querySelector('.dark-mode-video');   // Select dark mode video
+  const lightModeVideo = document.querySelector('.light-mode-video');
+  const darkModeVideo = document.querySelector('.dark-mode-video');
 
   toggleButton.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');  
     if (document.body.classList.contains('dark-mode')) {
       toggleButton.textContent = '☀️'; 
       mainHeading.textContent = '🌭GET SMARTER SATURDAY🌭'; 
-      lightModeVideo.style.display = 'none'; // Hide light mode video
-      darkModeVideo.style.display = 'block'; // Show dark mode video
-      darkModeVideo.play(); // Play dark mode video
-      lightModeVideo.pause(); // Pause light mode video
+      lightModeVideo.style.display = 'none';
+      darkModeVideo.style.display = 'block';
+      darkModeVideo.play();
+      lightModeVideo.pause();
     } else {
       toggleButton.textContent = '🌙'; 
       mainHeading.textContent = '🐝GET SMARTER SATURDAY🐝';
-      darkModeVideo.style.display = 'none'; // Hide dark mode video
-      lightModeVideo.style.display = 'block'; // Show light mode video
-      lightModeVideo.play(); // Play light mode video
-      darkModeVideo.pause(); // Pause dark mode video
+      darkModeVideo.style.display = 'none';
+      lightModeVideo.style.display = 'block';
+      lightModeVideo.play();
+      darkModeVideo.pause();
     }
   });
 
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const chatMessage = splitMessage[1].trim();
         const chatterName = message.data.split('!')[0].substring(1); 
         console.log('Chat message:', chatMessage);
-        displayChatMessage(chatMessage, chatterName); 
+        displayChatMessage(chatMessage, chatterName);
       }
     }
   };
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (urlObj.hostname === 'youtu.be') {
         return urlObj.pathname.slice(1);
       } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
-        return urlObj.searchParams.get('v'); 
+        return urlObj.searchParams.get('v');
       }
     } catch (error) {
       console.error('Error extracting video ID:', error);
@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const data = await response.json();
+      console.log("Fetched video data:", data);  // Debug log
       return data.items && data.items.length > 0 ? data.items : null;
     } catch (error) {
       console.error('Error fetching video data:', error);
@@ -103,14 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (videoIdQueue.length === 0) return;
 
     const videoIds = [...videoIdQueue];  
-    videoIdQueue = []; 
+    videoIdQueue = [];
 
     fetchBatchVideoData(videoIds).then((videos) => {
       if (videos) {
         videos.forEach(videoData => {
           addVideoCard(videoData);
         });
+      } else {
+        console.log("No video data returned."); // Debugging log
       }
+    }).catch(error => {
+      console.error("Error in batch processing videos:", error);
+      videoIdQueue = [...videoIds];  // Restore the queue if fetch fails
     });
   }
 
@@ -126,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!batchTimeout) {
       batchTimeout = setTimeout(() => {
         batchProcessVideos();
-        batchTimeout = null; 
+        batchTimeout = null;
       }, 1000); 
     }
   }
@@ -179,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const videoGrid = document.getElementById('videoGrid');
     if (videoGrid) {
+      console.log("Adding video to grid:", videoData);  // Debugging log
       videoGrid.appendChild(videoCard);
     } else {
       console.error('Video grid element not found');
@@ -205,6 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
       formattedTime += `${seconds} secs`;
     }
 
-    return formattedTime.trim(); 
+    return formattedTime.trim();
   }
 });
