@@ -3,8 +3,8 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 350px; /* Sidebar width */
-  height: 100vh; /* Full viewport height */
+  width: 350px;
+  height: 100vh;
   padding: 16px;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -13,13 +13,13 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-image: url('0000.png'); /* Light mode background */
+  background-image: url('0000.png'); /* Light mode image */
   background-size: cover;
   background-position: center;
 }
 
 .dark-mode .sidebar2 {
-  background-image: url('0001.png'); /* Dark mode background */
+  background-image: url('0001.png'); /* Dark mode image */
 }
 
 /* Sidebar (Left) */
@@ -27,8 +27,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 350px; /* Sidebar width */
-  height: 100vh; /* Full viewport height */
+  width: 350px;
+  height: 100vh;
   padding: 16px;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -37,16 +37,16 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-image: url('0000.png'); /* Light mode background */
+  background-image: url('0000.png'); /* Light mode image */
   background-size: cover;
   background-position: center;
 }
 
 .dark-mode .sidebar {
-  background-image: url('0001.png'); /* Dark mode background */
+  background-image: url('0001.png'); /* Dark mode image */
 }
 
-/* Text Styles for Both Sidebars */
+/* Text Styles (Restored) */
 .sidebar h1, .sidebar2 h1 {
   writing-mode: vertical-rl; /* Vertical text */
   transform: rotate(180deg); /* Flip the text */
