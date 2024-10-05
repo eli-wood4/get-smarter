@@ -97,7 +97,7 @@ body {
 .sidebar2 h1 {
   writing-mode: vertical-rl;
   font-size: 150px;
-  color: #000000;
+  color: #FFDAB9;
   text-align: center;
   margin: 0;
   position: absolute;
@@ -107,7 +107,7 @@ body {
 
 .sidebar2 h2 {
   font-size: 15px; 
-  color: #000000;
+  color: #FFDAB9;
   text-align: center;
   margin: 0;
   position: absolute;
