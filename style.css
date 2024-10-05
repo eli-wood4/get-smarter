@@ -24,6 +24,7 @@ body {
   background-image: url('0000.png'); /* Light mode background */
   background-size: cover;
   background-position: center;
+    margin-top: -20px; /* Adjust this value to move the text up */
 }
 
 .sidebar2 {
