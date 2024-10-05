@@ -55,7 +55,7 @@ body {
 
 .sidebar h1 {
   writing-mode: vertical-rl;
-  transform: rotate(180deg) translateY(20px); /* Move it up by 20px */;
+  transform: rotate(180deg) translateY(60px); /* Move it up by 20px */;
   font-size: 52px; 
   color: #FFDAB9;
   text-align: center;
