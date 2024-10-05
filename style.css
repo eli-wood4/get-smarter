@@ -40,7 +40,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden; 
-  background-image: url('0000.png'); /* Light mode background */
+  background-image: url('0000b.png'); /* Light mode background */
   background-size: cover;
   background-position: center;
 }
