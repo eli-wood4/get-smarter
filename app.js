@@ -1,15 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
   const toggleButton = document.getElementById('darkModeToggle');
   const mainHeading = document.querySelector('.sidebar h1'); 
+  const lightModeVideo = document.querySelector('.light-mode-video'); // Select light mode video
+  const darkModeVideo = document.querySelector('.dark-mode-video');   // Select dark mode video
 
   toggleButton.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');  
     if (document.body.classList.contains('dark-mode')) {
       toggleButton.textContent = '☀️'; 
       mainHeading.textContent = '🌭GET SMARTER SATURDAY🌭'; 
+      lightModeVideo.style.display = 'none'; // Hide light mode video
+      darkModeVideo.style.display = 'block'; // Show dark mode video
+      darkModeVideo.play(); // Play dark mode video
+      lightModeVideo.pause(); // Pause light mode video
     } else {
       toggleButton.textContent = '🌙'; 
       mainHeading.textContent = '🐝GET SMARTER SATURDAY🐝';
+      darkModeVideo.style.display = 'none'; // Hide dark mode video
+      lightModeVideo.style.display = 'block'; // Show light mode video
+      lightModeVideo.play(); // Play light mode video
+      darkModeVideo.pause(); // Pause dark mode video
     }
   });
 
