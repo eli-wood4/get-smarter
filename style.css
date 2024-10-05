@@ -216,20 +216,20 @@ body {
 
 .dark-mode .sidebar h1 {
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  transform: rotate(180deg) translateY(100px);
   font-size: 52px; 
   color: #E4E6EB;
   text-align: center;
   margin: 0;
   line-height: 1.1;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .dark-mode .sidebar h2 {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: 52px; 
-  color: #3A3B3C;
+  color: #FFFFE0;
   text-align: center;
   margin: 0;
   line-height: 1.1; 
