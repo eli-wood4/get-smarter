@@ -63,7 +63,7 @@ body {
 
 .sidebar h1 {
   writing-mode: vertical-rl;
-  transform: rotate(180deg) translateY(100px); /* Move it up by 20px */;
+  transform: rotate(180deg) translateY(110px); /* Move it up by 20px */;
   font-size: 52px; 
   color: #FFDAB9;
   text-align: center;
@@ -224,7 +224,7 @@ body {
 
 .dark-mode .sidebar h1 {
   writing-mode: vertical-rl;
-  transform: rotate(180deg) translateY(100px);
+  transform: rotate(180deg) translateY(110px);
   font-size: 52px; 
   color: #E4E6EB;
   text-align: center;
