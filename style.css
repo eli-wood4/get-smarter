@@ -57,7 +57,7 @@ body {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: 52px; 
-  color: #1b331b;
+  color: #000000;
   text-align: center;
   margin: 0;
   line-height: 1.1;
@@ -68,7 +68,7 @@ body {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: 52px; 
-  color: #60b360;
+  color: #000000;
   text-align: center;
   margin: 0;
   line-height: 1.1; 
@@ -79,7 +79,7 @@ body {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-size: 52px; 
-  color: #60b360;
+  color: #000000;
   text-align: center;
   margin: 0;
   line-height: 1.1;
