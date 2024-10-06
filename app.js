@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightModeVideo = document.querySelector('.light-mode-video');
   const darkModeVideo = document.querySelector('.dark-mode-video');
 
+  // Dark Mode Toggle Functionality
   toggleButton.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');  
     if (document.body.classList.contains('dark-mode')) {
@@ -23,14 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Twitch and YouTube API Configuration
   const twitchUsername = 'elibeelii';
   const twitchChannel = 'atrioc';
-  const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh';
-  const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E';
+  const twitchToken =   '7l74an6bprhw760p0u0b6lwpeglkgh'; // Replace with your actual Twitch OAuth token
+  const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E';   // Replace with your actual YouTube API key
+
   const postedVideos = {};
   let videoIdQueue = [];
   let batchTimeout = null;
 
+  // Connect to Twitch Chat via WebSocket
   const ws = new WebSocket('wss://irc-ws.chat.twitch.tv/');
 
   ws.onopen = () => {
@@ -42,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
       ws.send('PING :tmi.twitch.tv');
       console.log('Sent PING to keep the connection alive');
-    }, 5 * 60 * 1000);
+    }, 5 * 60 * 1000); // Ping every 5 minutes
   };
 
   ws.onmessage = (message) => {
@@ -51,16 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (message.data.startsWith('PING')) {
       ws.send('PONG :tmi.twitch.tv');
       console.log('Responded with PONG');
+      return;
     }
 
-    if (message.data.includes('PRIVMSG')) {
-      const splitMessage = message.data.split(' :');
-      if (splitMessage.length >= 2) {
-        const chatMessage = splitMessage[1].trim();
-        const chatterName = message.data.split('!')[0].substring(1); 
-        console.log('Chat message:', chatMessage);
-        displayChatMessage(chatMessage, chatterName);
-      }
+    // Parse Twitch chat messages
+    const regex = /:(\w+)!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :(.+)/;
+    const match = message.data.match(regex);
+
+    if (match) {
+      const chatterName = match[1];
+      const chatMessage = match[2];
+      console.log('Chat message:', chatMessage);
+      displayChatMessage(chatMessage, chatterName);
+    } else {
+      console.log('Could not parse message:', message.data);
     }
   };
 
@@ -72,34 +80,44 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Connection closed.');
   };
 
-  function getVideoId(url) {
-    try {
-      const urlObj = new URL(url);
-      if (urlObj.hostname === 'youtu.be') {
-        return urlObj.pathname.slice(1);
-      } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
-        return urlObj.searchParams.get('v');
+  // Function to extract and process YouTube links from chat messages
+  function displayChatMessage(message, chatterName) {
+    const youtubeLinkRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com\/(?:watch\?(?:.*&)?v=|v\/|embed\/)|youtu\.be\/)([^\s&]+)/g;
+    let match;
+    while ((match = youtubeLinkRegex.exec(message)) !== null) {
+      const videoId = match[1];
+      console.log('YouTube video ID found in message:', videoId);
+      if (videoId) {
+        addVideoToQueue(videoId, chatterName);
       }
-    } catch (error) {
-      console.error('Error extracting video ID:', error);
-    }
-    return null;
-  }
-
-  async function fetchBatchVideoData(videoIds) {
-    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds.join(',')}&key=${youtubeApiKey}`;
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-      const data = await response.json();
-      console.log("Fetched video data:", data);  // Debug log
-      return data.items && data.items.length > 0 ? data.items : null;
-    } catch (error) {
-      console.error('Error fetching video data:', error);
-      return null;
     }
   }
 
+  // Function to queue video IDs for batch processing
+  function addVideoToQueue(videoId, chatterName) {
+    if (!postedVideos[videoId]) {
+      postedVideos[videoId] = { count: 1, chatters: [chatterName] };
+      videoIdQueue.push(videoId);
+    } else if (!postedVideos[videoId].chatters.includes(chatterName)) {
+      postedVideos[videoId].chatters.push(chatterName);
+      postedVideos[videoId].count++;
+    }
+
+    if (videoIdQueue.length >= 50) {
+      // YouTube API supports up to 50 IDs per request
+      batchProcessVideos();
+    } else {
+      if (batchTimeout) {
+        clearTimeout(batchTimeout);
+      }
+      batchTimeout = setTimeout(() => {
+        batchProcessVideos();
+        batchTimeout = null;
+      }, 500); // Reduced delay for quicker processing
+    }
+  }
+
+  // Function to batch process video IDs
   function batchProcessVideos() {
     if (videoIdQueue.length === 0) return;
 
@@ -120,39 +138,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function addVideoToQueue(videoId, chatterName) {
-    if (!postedVideos[videoId]) {
-      postedVideos[videoId] = { count: 1, chatters: [chatterName] };
-      videoIdQueue.push(videoId);
-    } else if (!postedVideos[videoId].chatters.includes(chatterName)) {
-      postedVideos[videoId].chatters.push(chatterName);
-      postedVideos[videoId].count++;
-    }
-
-    if (!batchTimeout) {
-      batchTimeout = setTimeout(() => {
-        batchProcessVideos();
-        batchTimeout = null;
-      }, 1000); 
-    }
-  }
-
-  function displayChatMessage(message, chatterName) {
-    const youtubeLinkRegex = /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+)/;
-    const youtubeLinkMatch = message.match(youtubeLinkRegex);
-    
-    if (youtubeLinkMatch) {
-      const youtubeLink = youtubeLinkMatch[0];
-      console.log('YouTube link found in message:', youtubeLink);
-      const videoId = getVideoId(youtubeLink);
-      if (videoId) {
-        addVideoToQueue(videoId, chatterName);
+  // Function to fetch video data from YouTube API
+  async function fetchBatchVideoData(videoIds) {
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds.join(',')}&key=${youtubeApiKey}`;
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('YouTube API error:', errorData);
+        throw new Error(`YouTube API error: ${errorData.error.message}`);
       }
-    } else {
-      console.log('No YouTube link found in message:', message);
+      const data = await response.json();
+      console.log("Fetched video data:", data);
+      return data.items && data.items.length > 0 ? data.items : null;
+    } catch (error) {
+      console.error('Error fetching video data:', error);
+      return null;
     }
   }
 
+  // Function to add video card to the webpage
   function addVideoCard(videoData) {
     const videoId = videoData.id;
     const title = videoData.snippet.title;
@@ -166,7 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
     videoCard.classList.add('video-card');
     videoCard.setAttribute('data-video-id', videoId);
 
-    const chatNameBubble = `<div class="chatter-box">${postedVideos[videoId].chatters[0]} (+${postedVideos[videoId].count})</div>`;
+    const chatters = postedVideos[videoId].chatters.join(', ');
+    const count = postedVideos[videoId].count;
+    const chatNameBubble = `<div class="chatter-box">${chatters} (${count})</div>`;
 
     videoCard.innerHTML = `
       <div class="thumbnail-container">
@@ -185,13 +192,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const videoGrid = document.getElementById('videoGrid');
     if (videoGrid) {
-      console.log("Adding video to grid:", videoData);  // Debugging log
+      console.log("Adding video to grid:", videoData);
       videoGrid.appendChild(videoCard);
     } else {
       console.error('Video grid element not found');
     }
   }
 
+  // Function to format YouTube video duration
   function formatDuration(duration) {
     const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
     const hours = (match[1] || '').replace('H', '');
