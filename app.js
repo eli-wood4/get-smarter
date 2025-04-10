@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Twitch and YouTube API Configuration
   const twitchUsername = 'elibeelii';
   const twitchChannel = 'elibeelii';
-  const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh'; // Replace with your actual Twitch OAuth token
-  const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E'; // Replace with your actual YouTube API key
+  const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh'; 
+  const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E'; 
 
   // ===== IMPROVED VIDEO PROCESSING SYSTEM =====
   const postedVideos = {}; // Track posted videos
@@ -37,26 +37,43 @@ document.addEventListener('DOMContentLoaded', () => {
   let batchTimeout = null; // Timeout for batch processing
   
   // Maximum videos to store in memory (prevent indefinite growth)
-  const MAX_STORED_VIDEOS = 2000; // Increased from 1000
+  const MAX_STORED_VIDEOS = 2000; 
   
   // Configurable batch processing parameters
   const MAX_BATCH_SIZE = 50; // YouTube API limit
-  const BATCH_DELAY = 300; // Reduced from 500ms to process faster
-  const MAX_RETRIES = 5; // Increased from 3 for more resilience
+  const BATCH_DELAY = 300; 
+  const MAX_RETRIES = 5; 
   const API_RATE_LIMIT = 500; // Minimum ms between API requests
   let lastAPIRequest = 0;
 
   // For reconnection logic
   let reconnectAttempts = 0;
   let ws;
-  let lastMessageTimestamp = Date.now(); // Fixed variable name
+  let lastMessageTimestamp = Date.now(); 
   const HEARTBEAT_INTERVAL = 30000; // 30 seconds
-  const CONNECTION_TIMEOUT = 90000; // Fixed variable name (was CONNECTION_OUT)
+  const CONNECTION_TIMEOUT = 90000; 
 
   // Initialize IndexedDB for persistent storage
   let db;
   const DB_NAME = 'twitchYoutubeDB';
   const STORE_NAME = 'postedVideos';
+
+  // Clear IndexedDB on page load
+  function clearDB() {
+    const request = indexedDB.deleteDatabase(DB_NAME);
+    
+    request.onsuccess = () => {
+      console.log('Database cleared successfully on refresh');
+      // Now initialize a fresh database
+      initDB();
+    };
+    
+    request.onerror = (event) => {
+      console.error('Error clearing database:', event.target.error);
+      // Try to initialize anyway
+      initDB();
+    };
+  }
 
   function initDB() {
     const request = indexedDB.open(DB_NAME, 1);
@@ -71,8 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     request.onsuccess = (event) => {
       db = event.target.result;
       console.log('IndexedDB initialized');
-      // Load existing videos from DB
-      loadVideosFromDB();
+      // We no longer need to load videos from DB since we clear it on refresh
     };
     
     request.onerror = (event) => {
@@ -93,42 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function loadVideosFromDB() {
-    if (!db) return;
-    
-    const transaction = db.transaction([STORE_NAME], 'readonly');
-    const store = transaction.objectStore(STORE_NAME);
-    const request = store.getAll();
-    
-    request.onsuccess = (event) => {
-      const videos = event.target.result;
-      console.log(`Loaded ${videos.length} videos from DB`);
-      
-      // Process videos in batches to prevent UI blocking
-      const processBatch = (index) => {
-        const batch = videos.slice(index, index + 20);
-        if (batch.length === 0) return;
-        
-        batch.forEach(video => {
-          if (!postedVideos[video.videoId]) {
-            postedVideos[video.videoId] = video.data;
-            // Only display videos less than 24 hours old
-            if (Date.now() - video.timestamp < 24 * 60 * 60 * 1000) {
-              addVideoCard(video.data);
-            }
-          }
-        });
-        
-        // Process next batch on next tick
-        setTimeout(() => processBatch(index + 20), 0);
-      };
-      
-      processBatch(0);
-    };
-  }
-
-  // Initialize IndexedDB
-  initDB();
+  // Start by clearing the database
+  clearDB();
 
   // URL cache for efficient duplicate detection
   const urlCache = new Set();
