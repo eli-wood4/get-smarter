@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Add video card to the webpage with lazy loading
-  function addVideoCard(videoData) {
+  ffunction addVideoCard(videoData) {
     const videoId = videoData.id;
     
     // Skip if video doesn't exist in our tracking or element already exists
@@ -575,8 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
-  }
-
+}
   // Helper function to truncate text
   function truncateText(text, maxLength) {
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
