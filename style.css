@@ -63,7 +63,7 @@ body {
 
 .sidebar h1 {
   writing-mode: vertical-rl;
-  transform: rotate(180deg) translateY(100px); /* Move it up by 20px */;
+  transform: rotate(180deg) translateY(100px); /* Move it up by 20px */
   font-size: 52px; 
   color: #FFDAB9;
   text-align: center;
@@ -145,23 +145,7 @@ body {
   justify-content: center;
   align-items: center; 
 }
-.duration-badge {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background-color: rgba(0, 0, 0, 0.7); /* Dark background instead of blue */
-  color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: bold;
-}
 
-/* For dark mode */
-.dark-mode .duration-badge {
-  background-color: rgba(255, 255, 255, 0.7); /* Light background in dark mode */
-  color: black;
-}
 .video-card .chatter-box {
   position: absolute;
   top: 10px;
@@ -325,4 +309,23 @@ body {
 
 .dark-mode .dark-mode-video {
   display: block; /* Show the dark mode video in dark mode */
+}
+
+/* Duration Badge Styling - Added at the end of the file */
+.duration-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark background instead of blue */
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* For dark mode */
+.dark-mode .duration-badge {
+  background-color: rgba(255, 255, 255, 0.7); /* Light background in dark mode */
+  color: black;
 }
