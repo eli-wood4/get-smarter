@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Twitch and YouTube API Configuration
   const twitchUsername = 'elibeelii';
-  const twitchChannel = 'atrioc';
+  const twitchChannel = 'elibeelii';
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh'; // Replace with your actual Twitch OAuth token
   const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E'; // Replace with your actual YouTube API key
 
@@ -575,8 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
-  }
-
+}
   // Helper function to truncate text
   function truncateText(text, maxLength) {
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
