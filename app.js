@@ -46,6 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const API_RATE_LIMIT = 500; // Minimum ms between API requests
   let lastAPIRequest = 0;
 
+  // For reconnection logic
+  let reconnectAttempts = 0;
+  let ws;
+  let lastMessageTimestamp = Date.now(); // Fixed variable name
+  const HEARTBEAT_INTERVAL = 30000; // 30 seconds
+  const CONNECTION_TIMEOUT = 90000; // Fixed variable name (was CONNECTION_OUT)
+
   // Initialize IndexedDB for persistent storage
   let db;
   const DB_NAME = 'twitchYoutubeDB';
@@ -131,13 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const messageQueue = [];
   let isProcessingMessages = false;
   const MESSAGE_BATCH_SIZE = 100;
-
-  // For reconnection logic
-  let reconnectAttempts = 0;
-  let ws;
-  let lastMessagestamp = Date.now();
-  const HEARTBEAT_INTERVAL = 30000; // 30 seconds
-  const CONNECTION_OUT = 90000; // 90 seconds
 
   // Initialize WebSocket connection
   function initializeWebSocket() {
@@ -297,9 +297,14 @@ document.addEventListener('DOMContentLoaded', () => {
         timestamp: Date.now() // Track when video was first seen
       };
       videoIdQueue.push(videoId);
-    } else if (!postedVideos[videoId].chatters.includes(chatterName)) {
+    } else if (postedVideos[videoId].chatters && !postedVideos[videoId].chatters.includes(chatterName)) {
+      // Check if chatters array exists before using includes
       postedVideos[videoId].chatters.push(chatterName);
       postedVideos[videoId].count++;
+    } else if (!postedVideos[videoId].chatters) {
+      // Initialize chatters array if it doesn't exist
+      postedVideos[videoId].chatters = [chatterName];
+      postedVideos[videoId].count = 1;
     }
 
     // Schedule batch processing if not already scheduled
@@ -523,13 +528,19 @@ document.addEventListener('DOMContentLoaded', () => {
     videoCard.classList.add('video-card');
     videoCard.setAttribute('data-video-id', videoId);
 
+    // Make sure chatters exists before accessing it
+    if (!postedVideos[videoId].chatters) {
+      postedVideos[videoId].chatters = [];
+      postedVideos[videoId].count = 0;
+    }
+    
     // Join chatters with commas, limit to first 3 if there are many
     let chatters = postedVideos[videoId].chatters;
     let chatterDisplay = chatters.length <= 3 
       ? chatters.join(', ') 
       : `${chatters.slice(0, 3).join(', ')} +${chatters.length - 3} more`;
     
-    const count = postedVideos[videoId].count;
+    const count = postedVideos[videoId].count || 0;
     const chatNameBubble = `<div class="chatter-box">${chatterDisplay} (${count})</div>`;
 
     videoCard.innerHTML = `
@@ -575,7 +586,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
-}
+  }
+
   // Helper function to truncate text
   function truncateText(text, maxLength) {
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
