@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Twitch and YouTube API Configuration
   const twitchUsername = 'elibeelii';
-  const twitchChannel = 'elibeelii';
+  const twitchChannel = 'atrioc';
   const twitchToken = '7l74an6bprhw760p0u0b6lwpeglkgh'; // Replace with your actual Twitch OAuth token
   const youtubeApiKey = 'AIzaSyC7iRz1c8WIPB5gUagvXf0ro-HxAXsGa7E'; // Replace with your actual YouTube API key
 
@@ -135,9 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // For reconnection logic
   let reconnectAttempts = 0;
   let ws;
-  let lastMessageTimestamp = Date.now();
+  let lastMessagestamp = Date.now();
   const HEARTBEAT_INTERVAL = 30000; // 30 seconds
-  const CONNECTION_TIMEOUT = 90000; // 90 seconds
+  const CONNECTION_OUT = 90000; // 90 seconds
 
   // Initialize WebSocket connection
   function initializeWebSocket() {
@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Add video card to the webpage with lazy loading
-  ffunction addVideoCard(videoData) {
+  function addVideoCard(videoData) {
     const videoId = videoData.id;
     
     // Skip if video doesn't exist in our tracking or element already exists
@@ -575,7 +575,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
-}
+  }
+
   // Helper function to truncate text
   function truncateText(text, maxLength) {
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
