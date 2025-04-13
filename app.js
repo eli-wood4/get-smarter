@@ -542,12 +542,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const videoGrid = document.getElementById('videoGrid');
     if (videoGrid) {
-      // Add to the beginning for newest videos on top
-      if (videoGrid.firstChild) {
-        videoGrid.insertBefore(videoCard, videoGrid.firstChild);
-      } else {
-        videoGrid.appendChild(videoCard);
-      }
+      // CHANGED: Add to the end (bottom) instead of beginning (top)
+      videoGrid.appendChild(videoCard);
       
       // Add a subtle animation
       setTimeout(() => {
@@ -558,12 +554,12 @@ document.addEventListener('DOMContentLoaded', () => {
       videoObserver.observe(videoCard);
       
       // Limit total visible videos to improve performance
-      const MAX_VISIBLE_VIDEOS = 150;
+      const MAX_VISIBLE_VIDEOS = 700;
       const currentCards = document.querySelectorAll('.video-card');
       
       if (currentCards.length > MAX_VISIBLE_VIDEOS) {
-        // Remove excess videos from DOM but keep them in memory/DB
-        for (let i = MAX_VISIBLE_VIDEOS; i < currentCards.length; i++) {
+        // CHANGED: Remove excess videos from the beginning (top) instead of the end
+        for (let i = 0; i < currentCards.length - MAX_VISIBLE_VIDEOS; i++) {
           currentCards[i].remove();
         }
       }
